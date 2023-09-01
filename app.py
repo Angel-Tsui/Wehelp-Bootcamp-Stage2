@@ -3,14 +3,12 @@ app=Flask(__name__)
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
 
-# from app import error_handlers
-
 import mysql.connector
 con=mysql.connector.connect(
 	user="root",
 	password="",
 	host="localhost",
-	database="tp"
+	database="tp1"
 )
 
 # Pages
@@ -32,7 +30,6 @@ def bad_request(e):
 	print(e, "@", request.url)
 	result={"error":True, "message":"沒有該景點編號，請重新搜尋"}
 	return result
-	# return render_template("400.html", result=result)
 
 @app.errorhandler(404)
 def not_found(e):

@@ -8,7 +8,7 @@ con=mysql.connector.connect(
 	user="root",
 	password="",
 	host="localhost",
-	database="tp1"
+	database="atp1"
 )
 
 # Pages

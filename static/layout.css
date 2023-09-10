@@ -116,6 +116,8 @@ body{
     border-radius: 5px 0px 0px 5px;
     height: 46px;
     flex: none;
+    display: flex;
+    align-items: center;
 }
 
 .banner__word--search--typebox input{
@@ -228,7 +230,7 @@ body{
     flex: 20%;
     height: 242px;
     margin: 15px;
-    border: 1px solid #000000;
+    border: 1px solid #E8E8E8;
     border-radius: 5px;
 }
 

@@ -1,0 +1,320 @@
+body{
+    font-family: "Noto Sans TC";
+    margin: 0px;
+    align-items: center;
+}
+
+.nav__bg{
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    z-index: 50;
+    width: 100%;
+}
+
+.nav{
+    /* 整個nav bar的設定 */
+    flex: none;
+    margin-top: 0px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 1200px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* 台北一日遊字樣設定 */
+    color:#448899;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 700;
+    position: relative;
+}
+
+.nav__left{
+    padding-left:10px
+}
+
+.nav__right{
+    color:#666666;
+    font-size: 16px;
+    font-weight: 500;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+
+.nav__right--plan{
+    padding: 10px;
+    flex: none;
+}
+
+.nav__right--user{
+    flex: none;
+    padding: 10px;
+}
+
+.banner{
+    background-image:url('/static/images/welcome.png');
+    background-size:cover;
+    background-position: center;
+    background-position: top;
+    background-repeat: no-repeat;
+    height: 320px;
+    width: 100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    position: relative;
+    z-index:0;
+    margin-bottom: 40px;
+}
+
+.banner__word{
+    flex: none;
+    height: 149px;
+    width: 1200px;
+    padding-left: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.banner__word--slogan1{
+    color: white;
+    height: 41px;
+    text-shadow: 0px 0px 30px #ABC;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 24px;
+    margin-bottom: 15px;
+}
+
+.banner__word--slogan2{
+    color: white;
+    height: 22px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+
+.banner__word--search{
+    display: flex;
+}
+
+.banner__word--search--typebox{
+    background-image: url('/static/images/InputBox.png');
+    border-radius: 5px 0px 0px 5px;
+    height: 46px;
+    flex: none;
+}
+
+.banner__word--search--typebox input{
+    border: 0px;
+    font-size: 16px;
+    font-weight: 700;
+    margin: 15px;
+}
+
+.banner__word--search--typebox input:focus-visible{
+    outline:none;
+}
+
+.banner_word--search--buttonBg{
+    background-image: url('/static/images/SearchIconBg.png');
+    border-radius: 0px 5px 5px 0px;
+    border: 0px;
+    width: 60px;
+    height: 46px;
+    flex: none;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.banner_word--search--buttonicon{
+    position: absolute;
+    flex: none;
+}
+
+.main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 40px;
+}
+
+.main__mrt{
+    max-width: 100%;
+    margin: 10px auto;
+    overflow: hidden;
+    position: relative;
+}
+
+.main__mrt--left{
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    height: 100%;
+    width: 5%;
+    top: 0;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    background: linear-gradient(to right, white 60%, transparent)
+}
+
+.main__mrt--right{
+    background: black;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    height: 100%;
+    width: 8%;
+    top: 0;
+    right: 0;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 10px;
+    background: linear-gradient(to left, white 60%, transparent)
+}
+
+.main__mrt ul{
+    display: flex;
+    gap: 8px;
+    padding: 10px 55px;
+    margin: 0;
+    list-style: none;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+}
+
+.main__mrt ul::-webkit-scrollbar{
+    display: none;
+}
+
+.main__mrt ul li{
+    padding: 5px 10px;
+    display: inline-block;
+    user-select: none;
+    white-space: nowrap;
+    cursor:pointer;
+}
+
+.main__att1--setup{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.main__att1{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    flex: 20%;
+    height: 242px;
+    margin: 15px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+}
+
+.main__att1.show{
+    background-color: red;
+}
+
+.main__att1--photo{
+    flex: none;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    /* background-image: url("/static/images/HeroBanner.png"); */
+    height: 197px;
+    background-size:cover;
+    background-repeat:no-repeat;
+    background-position:bottom;
+    position: relative;
+    border-radius: 5px 5px 0px 0px;
+}
+
+.main__att1--photo--Bg{
+    position: absolute;
+    bottom: 0px;
+    background-color: rgb(0, 0, 0 ,0.6);
+    width: 100%;
+}
+
+.main__att1--photo--word{
+    font-weight: 700;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    text-indent: 10px;
+    position: absolute;
+    bottom: 0px;
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.main__att1--desc{
+    flex: none;
+    display: flex;
+    justify-content: space-around;
+    color: #757575;
+}
+
+.main__att1--desc--mrt{
+    padding: 10px;
+    flex: 50%;
+}
+
+.main__att1--desc--cat{
+    padding: 10px;
+    flex: 50%;
+    text-align: right;
+}
+
+.out{
+    text-align: center;
+}
+
+.footer{
+    background-color:#757575;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 104px;
+    width: 100%;
+    right: 0px;
+    left: 0px;
+    bottom: 0px;
+    color: white;
+    margin-top: auto;
+    position: absolute;
+}
+
+@media (max-width:1200px){
+    .nav{width:100%}
+    .banner__word{width:100%; padding-left:20px;}
+    .main{width:100%}
+    .main__att1{flex:40%}
+}
+
+@media (max-width:640px){
+    .nav{width:100%}
+    .banner__word{width:100%; padding-left:20px;}
+    .main{width:100%}
+    .main__att1{flex:100%}
+}

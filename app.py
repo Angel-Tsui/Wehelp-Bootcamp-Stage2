@@ -7,7 +7,8 @@ import mysql.connector
 con=mysql.connector.connect(
 	user="root",
 	password="",
-	host="localhost",
+	host="52.37.121.99",
+	port=3306,
 	database="atp1"
 )
 
@@ -25,11 +26,11 @@ def booking():
 def thankyou():
 	return render_template("thankyou.html")
 
-@app.errorhandler(400)
-def bad_request(e):
-	print(e, "@", request.url)
-	result={"error":True, "message":"沒有該景點編號，請重新搜尋"}
-	return result
+# @app.errorhandler(400)
+# def bad_request(e):
+# 	print(e, "@", request.url)
+# 	result={"error":True, "message":"沒有該景點編號，請重新搜尋"}
+# 	return result
 
 @app.errorhandler(404)
 def not_found(e):
@@ -49,7 +50,7 @@ def getData():
 	keyword=request.args.get("keyword")
 	print("Query Keyword:", keyword)
 	page=request.args.get("page")
-	print("Query Page:",page)
+	print("Query Page:", page)
 	# per_page 代表每一頁顯示多少資料
 	per_page=12
 	cursor=con.cursor(dictionary=True)

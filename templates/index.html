@@ -8,6 +8,7 @@
     <!-- <script defer src="static/index.js"></script> -->
 </head>
 <body>
+    <!-- top bar -->
     <div class="nav__bg">
         <div class="nav">
             <span class="nav__left">台北一日遊</span>
@@ -57,13 +58,14 @@
         m();
         let page=0;
         let keyword = "";
+        console.log("launch page")
         load();
         console.log("loading")
 
         // 功能開發
         // 生成捷運站列表
-        function m(){
-            fetch("/api/mrts")
+        async function m(){
+            await fetch("/api/mrts")
                 .then(function(receive){
                     return receive.json();
                 }).then(function(mrt){
@@ -147,6 +149,9 @@
             }
             console.log("observe and load")
             load();
+            console.log("stop observe")
+            intersectionObserver.unobserve(document.querySelector(".footer"))
+            console.log("stop observe 2")
         }, {
             rootMargin:"100px",
         })
@@ -167,20 +172,34 @@
         })
 
         // 連綫到後端取得資料
-        let main__att1=document.querySelector('.main__att1--setup');
-        function load(){
+        // let main__att1=document.querySelector('.main__att1--setup');
+        // function load(){
+        async function load(){
             console.log("page",page, "keyword", keyword)
             if(page == null){
                 console.log("沒有更多資料")
                 intersectionObserver.unobserve(document.querySelector(".footer"))
-            }else{
-                src="/api/attractions?page="+page+"&keyword="+keyword
-                fetch(src)
-                    .then(function(response){
-                        return response.json();
-                    }).then(function(result){
-                        let data=result["data"]
-                        // console.log(data)
+            }
+            else{
+                console.log("load else")
+                let src = await "/api/attractions?page="+page+"&keyword="+keyword
+                console.log(src)
+                let response = await fetch(src)
+                let result = await response.json()
+                console.log("result", result)
+                let data = await result["data"]
+                console.log("data", data)
+                page = await result["nextPage"]
+                console.log("next page", page)
+                // src="/api/attractions?page="+page+"&keyword="+keyword
+                // fetch(src)
+                //     .then(function(response){
+                //         console.log("src", src)
+                //         console.log("response", response)
+                //         return response.json();
+                //     }).then(function(result){
+                //         let data=result["data"]
+                //         console.log("data", data)
                         if(data.length == 0 || data == undefined){
                             main__att1.replaceChildren();
                             let nothing = document.createElement("div");
@@ -191,8 +210,8 @@
                             intersectionObserver.unobserve(document.querySelector(".footer"))
                         }
                         else{
-                            // 呼叫 Inf Scroller
-                            intersectionObserver.observe(document.querySelector(".footer"))
+                            // // 呼叫 Inf Scroller
+                            // intersectionObserver.observe(document.querySelector(".footer"))
                             // 開始搜尋
                             console.log("fetching for: ", keyword)
                             for(i=0;i<data.length;i++){
@@ -233,10 +252,14 @@
                                 main__desc.appendChild(main__descCat);
                             }
                         }
-                        page = result["nextPage"]
-                    })
+                        // await intersectionObserver.unobserve(document.querySelector(".footer"))
+                        // 呼叫 Inf Scroller
+                        console.log("start observe")
+                        await intersectionObserver.observe(document.querySelector(".footer"))
+                        // page = await result["nextPage"]
             }
         }
+        
     </script>
 </body>
 </html>

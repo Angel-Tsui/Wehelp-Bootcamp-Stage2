@@ -4,12 +4,27 @@ app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
 
 import mysql.connector
-con=mysql.connector.connect(
+from mysql.connector import pooling
+
+connectionpool=mysql.connector.pooling.MySQLConnectionPool(
+	pool_name="mysqlpool",
+	# pool_size=3,
+	pool_reset_session=True,
 	user="root",
 	password="",
 	host="localhost",
 	database="tp1"
 )
+con=connectionpool.get_connection()
+print("main", con.pool_name)
+# print(con.pool_size)
+
+# con=mysql.connector.connect(
+# 	user="root",
+# 	password="",
+# 	host="localhost",
+# 	database="tp1"
+# )
 
 # Pages
 @app.route("/")
@@ -31,11 +46,11 @@ def bad_request(e):
 	result={"error":True, "message":"沒有該景點編號，請重新搜尋"}
 	return result
 
-@app.errorhandler(404)
-def not_found(e):
-	print(e, "@", request.url)
-	result={"error":True, "message":"查無此頁，請確認網址"}
-	return result
+# @app.errorhandler(404)
+# def not_found(e):
+# 	print(e, "@", request.url)
+# 	result={"error":True, "message":"查無此頁，請確認網址"}
+# 	return result
 
 @app.errorhandler(500)
 def server_error(e):
@@ -45,11 +60,14 @@ def server_error(e):
 
 @app.route("/api/attractions")
 def getData():
+	# con=con.get_connection()
+	print("attractions", con.pool_name)
+	# print(con.pool_size)
 	# 取得 GET 拿到的資料
 	keyword=request.args.get("keyword")
 	print("Query Keyword:", keyword)
 	page=request.args.get("page")
-	print("Query Page:",page)
+	print("Query Page:", page)
 	# per_page 代表每一頁顯示多少資料
 	per_page=12
 	cursor=con.cursor(dictionary=True)
@@ -101,6 +119,7 @@ def getData():
 				# 把 attractioniImages (array) 放到 query (dict) 裏作爲 image (key) 的 value
 				q["images"]=attractioniImages
 		return {"nextPage":num,"data":query}
+		cursor.close()
 		con.close()
 	else:
 		print("Failed, Connection Problem")
@@ -118,6 +137,7 @@ def attID(attractionId):
 		if len(att_info) == 0:
 			print("Failed, Unknown Attraction Id")
 			abort(400)
+			# return {"error":True, "message":"查無此頁，請確認網址"}
 		else:
 			# print(att_info)
 			att_profile={}
@@ -143,6 +163,7 @@ def attID(attractionId):
 
 @app.route("/api/mrts")
 def mrt():
+	print("mtr", con.pool_name)
 	cursor=con.cursor(dictionary=True)
 	if cursor:
 		cursor.execute('SELECT mrt, COUNT(mrt) FROM info GROUP BY mrt ORDER BY COUNT(mrt) desc LIMIT 40')

@@ -149,7 +149,22 @@ input[name="slider_btn"]{
     align-items: center;
 }
 
-.datepicker{
+.booking--form--date input{
+    border: none;
+    background-color: white;
+    width: 193px;
+    height: 35px;
+    font-size: 16px;
+    font-weight: 500;
+    font-weight: 700;
+    padding-left: 5px;
+    padding-right: 5px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+/* .datepicker{
     background-color: white;
     width: 40%;
     height: 35px;
@@ -170,7 +185,7 @@ input[name="slider_btn"]{
 
 .booking--form--date img{
     height: 30px;
-}
+} */
 
 .booking--form--time{
     font-size: 16px;

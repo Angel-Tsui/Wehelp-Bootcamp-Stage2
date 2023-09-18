@@ -1,0 +1,330 @@
+.nav__bg{
+    border-bottom: 0.1px solid #E8E8E8;
+}
+
+.detail__display{
+    width: 1200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 40px;
+}
+
+.detail__display--pics{
+    flex: none;
+    height: 400px;
+    width: 540px;
+    display: flex;
+    justify-content: space-around;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.detail__display--gallery::-webkit-scrollbar{
+    display: none;
+}
+
+.detail__display--gallery{
+    flex: none;
+    width: 540px;
+    display: flex;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+    scroll-snap-stop: always;
+    scroll-snap-type: x mandatory;
+    z-index: 0;
+}
+
+.detail__display--gallery_img{
+    flex: 1 0 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    display: inline-block;
+    user-select: none;
+    white-space: nowrap;
+    scroll-snap-align: center;
+    z-index: 0;
+}
+
+.functions{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    width: inherit;
+    height: inherit;
+}
+
+.slider{
+    display: flex;
+    margin-top: 370px;
+    max-width: 70%;
+    gap: 10px;
+    z-index: 50;
+    justify-content: center;
+    overflow: hidden;
+}
+
+input[name="slider_btn"]{
+    display: none;
+}
+
+.slider_manual_btn{
+    background: white;
+    opacity: 0.7;
+    padding: 5px;
+    border-radius: 50%;
+}
+
+.slider_manual_btn.active{
+    padding: 3.5px;
+    background: black;
+    border: 1.5px solid white;
+}
+
+.detail__display--leftClick{
+    justify-content: flex-start;
+    padding-left: 5px;
+    z-index: 50;
+    cursor: pointer;
+}
+
+.detail__display--rightClick{
+    justify-content: flex-end;
+    padding-right: 5px;
+    z-index: 50;
+    cursor: pointer;
+}
+
+.detail__display--profile{
+    flex: none;
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    color: #666;
+    margin-left: 40px;
+}
+
+.detail__display--profile--title{
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 24px;
+    margin-bottom: 15px;
+}
+
+.detail__display--profile--short{
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 13.3px;
+    margin-bottom: 20px;
+}
+
+.detail__display--profile--booking{
+    border-radius: 5px;
+    background-color: #E8E8E8;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.booking--title{
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 13.3px;
+    margin-bottom: 15px;
+}
+
+.booking--des{
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+
+.booking--form--date{
+    display: flex;
+    gap: 5px;
+    margin-bottom: 15px;
+    align-items: center;
+}
+
+.booking--form--date input{
+    border: none;
+    background-color: white;
+    width: 193px;
+    height: 35px;
+    font-size: 16px;
+    font-weight: 500;
+    font-weight: 700;
+    padding-left: 5px;
+    padding-right: 5px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+/* .datepicker{
+    background-color: white;
+    width: 40%;
+    height: 35px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.booking--form--date input{
+    border: none;
+    width: 60%;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 500;
+    font-weight: 700;
+}
+
+.booking--form--date img{
+    height: 30px;
+} */
+
+.booking--form--time{
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 13.3px;
+    gap: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.booking--form--time label{
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 13.3px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.booking--form--time label img{
+    padding-right: 4px;
+}
+
+input[name='dorn']{
+    display:none;
+}
+
+.booking--form--price{
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 13.3px;
+    margin-bottom: 25px;
+}
+
+.booking--form--price span{
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 13.3px;
+}
+
+.booking--confirm{
+    height: 16px;
+    width: 114px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: #489;
+    color: white;
+    font-size: 19px;
+    font-weight: 400;
+    line-height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+hr{
+    width: 1180px;
+    border: 0.5px solid #E8E8E8;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.detail__intro{
+    width: 1200px;
+    margin-bottom: 120px;
+    color: #666;
+}
+
+.detail__intro--description{
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 25px;
+    margin-left:10px;
+    margin-right: 10px;
+}
+
+.detail__intro--location--title{
+    font-size: 16px;
+    font-weight: 700;
+    padding-bottom: 5px;
+    margin-left:10px;
+    margin-right: 10px;
+}
+
+.detail__intro--location--content{
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 25px;
+    margin-left:10px;
+    margin-right: 10px;
+}
+
+.detail__intro--transport--title{
+    font-size: 16px;
+    font-weight: 700;
+    padding-bottom: 5px;
+    margin-left:10px;
+    margin-right: 10px;
+}
+
+.detail__intro--transport--content{
+    font-size: 16px;
+    font-weight: 400;
+    margin-left:10px;
+    margin-right: 10px;
+}
+
+@media (max-width:1200px){
+    .detail__display{width:100%}
+    .detail__display--pics{width: 45%;}
+    .detail__display--profile{max-width: 600px; width:45%; padding-left:10px; padding-right:10px; margin-left:2%;}
+    hr{width: 95%;}
+    .detail__intro{width:95%; margin-bottom: 134px;}
+    .booking--form--date input{width: 50%;}
+}
+
+@media (max-width:650px){
+    .detail__display{width:100%; align-items: flex-start;;}
+    .detail__display--pics{width: 45%; margin-bottom: 20px;}
+    .detail__display--profile{max-width: 600px; width:45%; padding-left:10px; padding-right:10px; margin-left:2%;}
+    .detail__display--profile--title{margin-bottom: 10px}
+    .detail__display--profile--short{margin-bottom: 10px}
+    hr{width: 95%;}
+    .booking--form--time span{flex: 100%}
+    .detail__intro{width:95%; margin-bottom: 134px;}
+    .booking--form--date input{width: 50%;}
+}
+
+@media (max-width:540px){
+    .detail__display{width:100%; margin-top: 0px;}
+    .detail__display--pics{padding-left: 0px; padding-right: 0px; height: 350px; width: 100%; margin-bottom: 20px;}
+    .detail__display--gallery_img{width: 100%;}
+    .slider{margin-top: 315px;}
+    .detail__display--profile{width:95%; padding-left:10px; padding-right:10px;}
+    hr{width: 95%;}
+    .booking--form--time span{flex: none}
+    .detail__intro{width:95%;}
+}

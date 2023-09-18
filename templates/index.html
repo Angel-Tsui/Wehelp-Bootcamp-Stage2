@@ -64,6 +64,7 @@
 
         // 功能開發
         // 生成捷運站列表
+
         function m(){
             fetch("/api/mrts")
                 .then(function(receive){
@@ -171,6 +172,8 @@
             load()
         })
 
+
+        // let main__att1=document.querySelector('.main__att1--setup');
         main__att1 = document.querySelector(".main__att1--setup");
         // 連綫到後端取得資料
         function load(){

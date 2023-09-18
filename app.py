@@ -48,9 +48,9 @@ def getData():
 			pool_reset_session=True,
 			user="root",
 			password="",
-			host="52.37.121.99",
+			host="localhost",
 			port=3306,
-			database="atp1"
+			database="tp1"
 		)
 		print("Connection Pool Name", connectionpool.pool_name)
 		print("Connection Pool Size", connectionpool.pool_size)
@@ -117,7 +117,6 @@ def getData():
 					attractioniImages.append(i["images"])
 					# 把 attractioniImages (array) 放到 query (dict) 裏作爲 image (key) 的 value
 					q["images"]=attractioniImages
-			cursor.close()
 			return {"nextPage":num,"data":query}
 	# catch any error due to connection issue
 	except Error as e:
@@ -125,7 +124,6 @@ def getData():
 		return (500)
 	# close db connection and return the connection object to the connection pool for the next usage if it the object was connected
 	finally:
-		if con.is_connected():
 			con.close()
 			print("MySQL connection is closed")
 			
@@ -139,9 +137,9 @@ def attID(attractionId):
 			pool_reset_session=True,
 			user="root",
 			password="",
-			host="52.37.121.99",
+			host="localhost",
 			port=3306,
-			database="atp1"
+			database="tp1"
 		)
 		print("Connection Pool Name", connectionpool.pool_name)
 		print("Connection Pool Size", connectionpool.pool_size)
@@ -194,18 +192,18 @@ def mrt():
 			pool_reset_session=True,
 			user="root",
 			password="",
-			host="52.37.121.99",
+			host="localhost",
 			port=3306,
-			database="atp1"
+			database="tp1"
 		)
 		print("Connection Pool Name", connectionpool.pool_name)
 		print("Connection Pool Size", connectionpool.pool_size)
 		
 		# get connection object from the connection pool
-		cnx=connectionpool.get_connection()
-		if cnx.is_connected():
-			print("mtr", cnx.pool_name)
-			cursor=cnx.cursor(dictionary=True)
+		con=connectionpool.get_connection()
+		if con.is_connected():
+			print("mtr", con.pool_name)
+			cursor=con.cursor(dictionary=True)
 			cursor.execute('SELECT mrt, COUNT(mrt) FROM info GROUP BY mrt ORDER BY COUNT(mrt) desc LIMIT 40')
 			mrt=cursor.fetchall()
 			mrt_name=[]
@@ -220,8 +218,8 @@ def mrt():
 		return (500)
 	# close db connection and return the connection object to the connection pool for the next usage if it the object was connected
 	finally:
-		if cnx.is_connected():
-			cnx.close()
+		if con.is_connected():
+			con.close()
 			print("MySQL connection is closed")	
 
 app.run(host="0.0.0.0", port=3000)

@@ -85,14 +85,14 @@ input[name="slider_btn"]{
 }
 
 .detail__display--leftClick{
-    justify-content: flex-start;
+    /* justify-content: flex-start; */
     padding-left: 5px;
     z-index: 50;
     cursor: pointer;
 }
 
 .detail__display--rightClick{
-    justify-content: flex-end;
+    /* justify-content: flex-end; */
     padding-right: 5px;
     z-index: 50;
     cursor: pointer;

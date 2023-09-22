@@ -3,6 +3,10 @@ app=Flask(__name__)
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
 
+import jwt
+key = "keepsafe"
+import datetime
+
 import mysql.connector
 from mysql.connector import Error
 from mysql.connector import pooling
@@ -39,6 +43,140 @@ def server_error(e):
 	result={"error":True, "message":"連綫錯誤，請重新載入"}
 	return result
 
+@app.route("/api/user", methods=["POST"])
+def registerac():
+	result = request.json
+	name = result["name"]
+	email = result["email"]
+	password = result["password"]
+	# print("name:", name, "email:", email, "passsword: ", password)
+	try:
+		connectionpool=pooling.MySQLConnectionPool(
+			pool_name="mysqlpool",
+			pool_size=3,
+			pool_reset_session=True,
+			user="root",
+			password="",
+			host="localhost",
+			port=3306,
+			database="tp1"
+		)
+		con=connectionpool.get_connection()
+		if con.is_connected():
+			cursor=con.cursor(dictionary = True)
+			cursor.execute("SELECT*FROM user WHERE email=%s",(email,))
+			existingEmail = cursor.fetchone()
+			cursor.execute("SELECT*FROM user WHERE name=%s",(name,))
+			existingUser = cursor.fetchone()
+			if existingUser:
+				message = {
+					"error" : True,
+					"message" : "此用戶名稱已被使用，請重新命名"
+				}
+			elif existingEmail:
+				message = {
+					"error" : True,
+					"message" : "此電子郵件已登記"
+				}
+			else:
+				cursor.execute("INSERT INTO user(name,email,password)VALUES(%s,%s,%s)",(name, email, password))
+				con.commit()
+				message = {
+					"ok" : True
+				}
+			return message
+	# catch any error due to connection issue
+	except Error as e:
+		print("Failed, Connection Problem", e)
+		return (500)
+	# close db connection and return the connection object to the connection pool for the next usage if it the object was connected
+	finally:
+		con.close()
+		print("MySQL connection is closed")
+
+@app.route("/api/user/auth", methods=["PUT","GET"])
+def signin():
+	try:
+		connectionpool=pooling.MySQLConnectionPool(
+			pool_name="mysqlpool",
+			pool_size=3,
+			pool_reset_session=True,
+			user="root",
+			password="",
+			host="localhost",
+			port=3306,
+			database="tp1"
+		)
+		con=connectionpool.get_connection()
+		if con.is_connected():
+			cursor=con.cursor(dictionary = True)
+			if request.method == "PUT":
+				print("PUT")
+				result = request.json
+				print(result)
+				useremail = result["email"]
+				userpassword = result["password"]
+				# print(useremail, userpassword)
+				cursor.execute("SELECT*FROM user WHERE email=%s and password=%s",(useremail, userpassword))
+				validuser = cursor.fetchone()
+				# print(validuser)
+				if validuser:
+					encoded_userinfo = jwt.encode(
+						{
+							"id" : validuser["id"],
+							"name" : validuser["name"],
+							"email" : validuser["email"],
+							"exp" : datetime.datetime.utcnow() + datetime.timedelta(days=7)
+						}, key, algorithm="HS256")
+					# print(encoded_userinfo)
+					token = jwt.decode(encoded_userinfo, key, algorithms="HS256")
+					# print(token["useremail"])
+					message = {
+						"token" : encoded_userinfo
+					}
+				else:
+					message = {
+						"error" : True,
+						"message" : "沒有此用戶，請點擊注冊下面注冊"
+					}
+			elif request.method == "GET":
+				url = "/api/user/auth"
+				headers = {
+					'Authorization' : request.headers.get('Authorization'),
+					'Accept' : 'application/json',
+					'Content-Type' : 'application/json'
+				}
+				# print(headers)
+				encryp_token = headers["Authorization"]
+				# print(encryp_token)
+				clean_token = encryp_token.replace("Bearer ", "")
+				# print("token:", clean_token)
+
+				token = jwt.decode(clean_token, key, algorithms="HS256")
+				needed_info = {
+								"id" : token["id"],
+								"name" : token["name"],
+								"email" : token["email"]
+							  }
+				# print("token", token)
+				if token:
+					message = {
+						"data" : needed_info
+					}
+				else:
+					message = {
+						"data" : None
+					}
+			return message
+	# catch any error due to connection issue
+	except Error as e:
+		print("Failed, Connection Problem", e)
+		return (500)
+	# close db connection and return the connection object to the connection pool for the next usage if it the object was connected
+	finally:
+		con.close()
+		print("MySQL connection is closed")
+
 @app.route("/api/attractions")
 def getData():
 	try:
@@ -52,20 +190,17 @@ def getData():
 			port=3306,
 			database="tp1"
 		)
-		print("Connection Pool Name", connectionpool.pool_name)
-		print("Connection Pool Size", connectionpool.pool_size)
 		
 		# get connection object from the connection pool
 		con=connectionpool.get_connection()
 		if con.is_connected():
-			# db_info = con.get_server_info()
 			# print("connected to MySQL database using connection pool, MySQL Server version on ", db_info)
-			print("attractions", con.pool_name)
+			# print("attractions", con.pool_name)
 			# 取得 GET 拿到的資料
 			keyword=request.args.get("keyword")
-			print("Query Keyword:", keyword)
+			# print("Query Keyword:", keyword)
 			page=request.args.get("page")
-			print("Query Page:", page)
+			# print("Query Page:", page)
 			# per_page 代表每一頁顯示多少資料
 			per_page=12
 			# create cursor object to execute MySQL commands
@@ -92,9 +227,9 @@ def getData():
 
 			# query 代表取得的資料，做後續處理
 			if keyword != None:
-				cursor.execute('SELECT attraction.id, attraction.name, info.category, info.description, attraction.address, info.transport, info.mrt, attraction.lat, attraction.lng FROM attraction INNER JOIN info ON attraction.id=info.att_id WHERE info.mrt=%s OR attraction.name LIKE %s ORDER BY attraction.id asc LIMIT %s OFFSET %s',(keyword, n_keyword, per_page, off_set))
+				cursor.execute('SELECT attraction.id, attraction.off_id, attraction.name, info.category, info.description, attraction.address, info.transport, info.mrt, attraction.lat, attraction.lng FROM attraction INNER JOIN info ON attraction.id=info.att_id WHERE info.mrt=%s OR attraction.name LIKE %s ORDER BY attraction.id asc LIMIT %s OFFSET %s',(keyword, n_keyword, per_page, off_set))
 			else:
-				cursor.execute('SELECT attraction.id, attraction.name, info.category, info.description, attraction.address, info.transport, info.mrt, attraction.lat, attraction.lng FROM attraction INNER JOIN info ON attraction.id=info.att_id ORDER BY attraction.id asc LIMIT %s OFFSET %s',(per_page, off_set))
+				cursor.execute('SELECT attraction.id, attraction.off_id, attraction.name, info.category, info.description, attraction.address, info.transport, info.mrt, attraction.lat, attraction.lng FROM attraction INNER JOIN info ON attraction.id=info.att_id ORDER BY attraction.id asc LIMIT %s OFFSET %s',(per_page, off_set))
 			query=cursor.fetchall()
 
 			# 計算總共多少筆資料，num 代表下一頁的頁數，如沒有下一頁則顯示 None
@@ -129,7 +264,6 @@ def getData():
 			con.close()
 			print("MySQL connection is closed")
 			
-
 @app.route("/api/attraction/<attractionId>")
 def attID(attractionId):
 	try:
@@ -143,20 +277,20 @@ def attID(attractionId):
 			port=3306,
 			database="tp1"
 		)
-		print("Connection Pool Name", connectionpool.pool_name)
-		print("Connection Pool Size", connectionpool.pool_size)
+		# print("Connection Pool Name", connectionpool.pool_name)
+		# print("Connection Pool Size", connectionpool.pool_size)
 		
 		# get connection object from the connection pool
 		con=connectionpool.get_connection()
 		if con.is_connected():
 			attractionId=int(attractionId)
-			print("Query Attraction Id:", attractionId)
+			# print("Query Attraction Id:", attractionId)
 			cursor=con.cursor(dictionary=True)
 			cursor.execute('SELECT*FROM attraction INNER JOIN info ON attraction.id=info.att_id INNER JOIN all_images ON attraction.id=all_images.att_id WHERE attraction.off_id=%s',(attractionId,))
 			att_info=cursor.fetchall()
 			# print(len(att_info))
 			if len(att_info) == 0:
-				print("Failed, Unknown Attraction Id")
+				# print("Failed, Unknown Attraction Id")
 				abort(400)
 			else:
 				# print(att_info)
@@ -174,7 +308,7 @@ def attID(attractionId):
 					att_profile["lat"]=a["lat"]
 					att_profile["lng"]=a["lng"]
 					att_profile["images"]=images
-				print("Query Completed")
+				# print("Query Completed")
 				return {"data":att_profile}
 	except Error as e:
 		print("Failed, Connection Problem", e)
@@ -198,13 +332,11 @@ def mrt():
 			port=3306,
 			database="tp1"
 		)
-		print("Connection Pool Name", connectionpool.pool_name)
-		print("Connection Pool Size", connectionpool.pool_size)
 		
 		# get connection object from the connection pool
 		con=connectionpool.get_connection()
 		if con.is_connected():
-			print("mtr", con.pool_name)
+			# print("mtr", con.pool_name)
 			cursor=con.cursor(dictionary=True)
 			cursor.execute('SELECT mrt, COUNT(mrt) FROM info GROUP BY mrt ORDER BY COUNT(mrt) desc LIMIT 40')
 			mrt=cursor.fetchall()

@@ -15,8 +15,9 @@ with open("taipei-attractions.json", mode="r", encoding="utf-8") as response:
 attractions=data["result"]["results"]
 print("Data Read Completed")
 
-# 製造 table (attraction, info, all_images, others)
+# 設定 database 的解析為 utf8，製造 table (attraction, info, all_images, others)
 cursor=con.cursor()
+cursor.execute('ALTER DATABASE tp1 DEFAULT CHARACTER SET utf8')
 cursor.execute('''CREATE TABLE attraction(
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     off_id BIGINT NOT NULL,

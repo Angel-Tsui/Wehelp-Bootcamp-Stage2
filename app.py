@@ -252,7 +252,6 @@ def getData():
 					attractioniImages.append(i["images"])
 					# 把 attractioniImages (array) 放到 query (dict) 裏作爲 image (key) 的 value
 					q["images"]=attractioniImages
-			# cursor.close()
 			return {"nextPage":num,"data":query}
 	# catch any error due to connection issue
 	except Error as e:
@@ -260,7 +259,6 @@ def getData():
 		return (500)
 	# close db connection and return the connection object to the connection pool for the next usage if it the object was connected
 	finally:
-		# if con.is_connected():
 			con.close()
 			print("MySQL connection is closed")
 			

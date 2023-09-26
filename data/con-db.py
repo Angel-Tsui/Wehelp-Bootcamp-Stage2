@@ -6,7 +6,7 @@ con=mysql.connector.connect(
     user="root",
     password="",
     host="localhost",
-    database="tp1"
+    database="atp1"
 )
 
 with open("taipei-attractions.json", mode="r", encoding="utf-8") as response:

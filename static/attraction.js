@@ -64,7 +64,7 @@ fetch(src)
             slider_btns[count].classList.add('active');
             }
             else{
-                count = totalImgCount
+                count = totalImgCount;
             }
             
         })

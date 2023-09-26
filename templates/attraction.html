@@ -7,8 +7,12 @@
     <link rel="stylesheet" type="text/css" a href="/static/standard.css"/>
     <link rel="stylesheet" type="text/css" a href="/static/attraction.css"/>
     <script defer src="/static/attraction.js"></script>
+    <script defer src="/static/standard.js"></script>
 </head>
-<body>
+<body onload="verify()">
+    <dialog class="modal">
+        <div>Hello</div>
+    </dialog>
     <!-- top bar -->
     <div class="nav__bg">
         <div class="nav">
@@ -25,12 +29,7 @@
             <div class="detail__display--gallery"></div>
             <div class="functions">
                 <div class="detail__display--leftClick"><img src="/static/images/attraction_la.png"/></div>
-                <div class="slider">
-                    <!-- <label class="slider_manual_btn"><input type="radio" name="slider_btn" id="slider_btn1"></label>
-                    <label class="slider_manual_btn"><input type="radio" name="slider_btn" id="slider_btn2"></label>
-                    <label class="slider_manual_btn"><input type="radio" name="slider_btn" id="slider_btn3"></label>
-                    <label class="slider_manual_btn"><input type="radio" name="slider_btn" id="slider_btn4"></label> -->
-                </div>
+                <div class="slider"></div>
                 <div class="detail__display--rightClick"><img src="/static/images/attraction_ra.png"/></div>
             </div> 
         </div>

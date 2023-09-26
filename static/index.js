@@ -2,9 +2,9 @@
 m();
 let page=0;
 let keyword = "";
-console.log("launch page")
+// console.log("launch page")
 load();
-console.log("loading")
+// console.log("loading")
 
 // 功能開發
 // 生成捷運站列表
@@ -91,10 +91,10 @@ const intersectionObserver = new IntersectionObserver(entries => {
     if (entries[0].isIntersecting == false){
         return
     }
-    console.log("stop observe")
+    // console.log("stop observe")
     intersectionObserver.unobserve(document.querySelector(".footer"))
-    console.log("stop observe 2")
-    console.log("observe and load")
+    // console.log("stop observe 2")
+    // console.log("observe and load")
     load();
 }, {
     rootMargin:"100px",
@@ -107,7 +107,7 @@ form.addEventListener("submit", function (res){
     intersectionObserver.unobserve(document.querySelector(".footer"))
     let getkeyword=document.querySelector("#keyword");
     keyword=getkeyword.value;
-    console.log(keyword);
+    // console.log(keyword);
     page=0;
 
     let emptyPage = document.querySelector(".main__att1--setup");
@@ -119,28 +119,28 @@ form.addEventListener("submit", function (res){
 main__att1 = document.querySelector(".main__att1--setup");
 // 連綫到後端取得資料
 function load(){
-    console.log("page",page, "keyword", keyword)
+    // console.log("page",page, "keyword", keyword)
     if(page == null){
-        console.log("沒有更多資料")
+        // console.log("沒有更多資料")
         intersectionObserver.unobserve(document.querySelector(".footer"))
     }
     else{
         src="/api/attractions?page="+page+"&keyword="+keyword
-        console.log("before fetch", src)
+        // console.log("before fetch", src)
         fetch(src)
             .then(function(response){
-                console.log("in fetch", src)
-                console.log("response", response)
+                // console.log("in fetch", src)
+                // console.log("response", response)
                 return response.json();
             }).then(function(result){
                 let data=result["data"]
-                console.log("data", data)
+                // console.log("data", data)
                 page = result["nextPage"]
-                console.log("next page", page)
+                // console.log("next page", page)
                 if(data.length == 0 || data == undefined){
                     main__att1.replaceChildren();
                     let nothing = document.createElement("div");
-                    console.log("沒有搜尋結果")
+                    // console.log("沒有搜尋結果")
                     nothing.innerText="沒有搜尋結果";
                     nothing.className="out"
                     main__att1.appendChild(nothing)
@@ -148,7 +148,7 @@ function load(){
                 }
                 else{
                     // 開始搜尋
-                    console.log("fetching for: ", keyword)
+                    // console.log("fetching for: ", keyword)
                     for(i=0;i<data.length;i++){
                         // console.log(data[i]["name"])
                         // 呼叫想要加入div
@@ -157,18 +157,13 @@ function load(){
                         const main__card=document.createElement('div');
                         main__card.className="main__att1";
                         // console.log(data[i]["id"])
-                        main__card.id=data[i]["id"];
+                        main__card.id=data[i]["off_id"];
                         main__card.onclick=function(){
                             // let id = main__card.id
-                            console.log(main__card.id)
+                            // console.log(main__card.id)
                             location.href = "/attraction/" + main__card.id
                         }
 
-                        main__card.submit=function(){
-                            att_id=data[i]["att_id"];
-                            console.log(att_id);
-                            href="/attraction/{att_id}";
-                        }
                         main__att1.appendChild(main__card);
 
                         const main__photo=document.createElement('div');
@@ -201,7 +196,7 @@ function load(){
                     }
                 }
                 // 呼叫 Inf Scroller
-                console.log("start observe")
+                // console.log("start observe")
                 intersectionObserver.observe(document.querySelector(".footer"))
             })
     }

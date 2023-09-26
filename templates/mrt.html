@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MRT</title>
+</head>
+<body>
+    
+    <script>
+        let main=document.querySelector(body)
+        let src="/api/mrts";
+        fetch(src,{
+            headers:{
+                "Content_Type":"application/json; charset=UTF-8"
+            }
+        }).then(function(display){
+            return display.json();
+        }).then(function(result){
+            if(Object.keys(result) == "error"){
+                console.log(result)
+            }
+            else{
+                main.innerHTML=result
+            }
+        })
+    </script>
+</body>
+</html>

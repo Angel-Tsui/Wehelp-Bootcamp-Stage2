@@ -13,6 +13,10 @@ a{
     color:#448899;
 }
 
+#signinclick, #signupclick{
+    cursor: pointer;
+}
+
 .nav__bg{
     background-color: white;
     display: flex;
@@ -66,7 +70,118 @@ a{
 .nav__right--user{
     flex: none;
     padding: 10px;
+    cursor: pointer;
 }
+
+a{
+    white-space: nowrap;
+}
+
+dialog{
+    padding: 0px;
+    border: 1px ;
+    border-radius: 5px;
+    box-shadow: 0px 4px 60px 0px #AAA;
+}
+
+dialog::backdrop{
+    background: rgba(0, 0, 0, 0.4);
+    /* padding: 0px; */
+}
+
+.completeform{
+    display: flex;
+    flex-direction: column;
+    width: 332px;
+}
+
+.bluebar{
+    height: 10px;
+    width: inherit;
+    background: linear-gradient(270deg, #378 0%, #6AB 100%);
+    /* border-radius: 5px 5px 0px 0px; */
+}
+
+.signupform{
+    background-color: white;
+    /* border-radius: 0px 0px 5px 5px; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 10px;  
+    color: #666666; 
+    position: relative;
+}
+
+.icon_close{
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    right: 5px;
+    top: 5px;
+    cursor: pointer;
+}
+
+.signinHeader{
+    font-size: 24px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.signupformdetail div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.signininfo{
+    padding: 10px;
+    border: 1px solid #E8E8E8;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.submitbtn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    width: 310px;
+    height: 47px;
+    background-color: #489;
+    color: white;
+    font-size: 19px;
+    font-weight: 400;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.switch{
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+    cursor: pointer;
+}
+
+/* .switch span{
+    
+} */
+
+#formcontent_signin{
+    display: none;
+}
+
+.successmessage{
+    text-align: center;
+    color: green;
+}
+
+.errormessage, .signinfailmessage{
+    text-align: center;
+    color: red;
+}
+
 
 .footer{
     background-color:#757575;

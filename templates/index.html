@@ -4,14 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>台北一日遊</title>
-    <link rel="stylesheet" type="text/css" a href="static/layout.css"/>
-    <!-- <script defer src="static/index.js"></script> -->
+    <link rel="stylesheet" type="text/css" a href="/static/standard.css"/>
+    <link rel="stylesheet" type="text/css" a href="/static/index.css"/>
+    <script defer src="static/index.js"></script>
+    <script defer src="/static/standard.js"></script>
 </head>
-<body>
+<body onload="verify()">
+    <!-- 會員注冊表單 -->
+    <!-- <dialog class="modal">
+        <div class="completeform">
+                <div class="bluebar"></div>
+                <div class="signupform">
+                    <img src="/static/images/icon_close.png" class="icon_close"/> -->
+                    <!-- 注冊表單 -->
+                    <!-- <div id="formcontent_signup">
+                        <div class="signinHeader">注冊會員賬號</div>
+                        <form action="/api/user" class="signupformdetail" method="POST">
+                            <div><input type="text" name="name" placeholder="輸入姓名" class="signininfo"></div>
+                            <div><input type="text" name="email" placeholder="輸入電子郵件" class="signininfo"></div>
+                            <div><input type="text" name="password" placeholder="輸入密碼" class="signininfo"></div>
+                            <div type="submit" class="submitbtn" id="registerbtn">註冊新帳戶</div>
+                            <div class="switch">已經有賬戶了？ 
+                                <span id="signinclick">點此登入</span>
+                            </div>
+                        </form>
+                    </div> -->
+                    <!-- 登入表單 -->
+                    <!-- <div id="formcontent_signin">
+                        <div class="signinHeader">登入</div>
+                        <form action="/api/user/auth" class="signupformdetail" method="PUT">
+                            <div><input type="text" name="email" placeholder="輸入電子郵件" class="signininfo"></div>
+                            <div><input type="text" name="password" placeholder="輸入密碼" class="signininfo"></div>
+                            <div type="submit" class="submitbtn" id="signinbtn">登入</div>
+                            <div class="switch">還沒有賬號？ 
+                                <span id="signupclick">點此注冊</span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+    </dialog> -->
+
     <!-- top bar -->
     <div class="nav__bg">
         <div class="nav">
-            <span class="nav__left">台北一日遊</span>
+            <span class="nav__left"><a href="/">台北一日遊</a></span>
             <div class="nav__right">
                 <span class="nav__right--plan">預定行程</span>
                 <span class="nav__right--user">登入/註冊</span>
@@ -53,7 +90,7 @@
     <!-- footer -->
     <div class="footer">COPYRIGHT © 2021 台北一日遊</div>
     
-    <script>
+    <!-- <script>
         // 載入初始網頁的程式
         m();
         let page=0;
@@ -64,7 +101,6 @@
 
         // 功能開發
         // 生成捷運站列表
-
         function m(){
             fetch("/api/mrts")
                 .then(function(receive){
@@ -172,10 +208,8 @@
             load()
         })
 
-
-        // let main__att1=document.querySelector('.main__att1--setup');
-        main__att1 = document.querySelector(".main__att1--setup");
         // 連綫到後端取得資料
+        // let main__att1=document.querySelector('.main__att1--setup');
         function load(){
             console.log("page",page, "keyword", keyword)
             if(page == null){
@@ -214,6 +248,19 @@
                                 // 製造框架同時加入class設定，然後append到section裏面
                                 const main__card=document.createElement('div');
                                 main__card.className="main__att1";
+                                // console.log(data[i]["id"])
+                                main__card.id=data[i]["id"];
+                                // main__card.setAttribute(data[i]["id"],data[i]["id"])
+                                main__card.onclick=function(){
+                                    console.log(main__card.id)
+                                    location.href="/attraction/main__card.id}"
+                                }
+
+                                main__card.submit=function(){
+                                    att_id=data[i]["att_id"];
+                                    console.log(att_id);
+                                    href="/attraction/{att_id}";
+                                }
                                 main__att1.appendChild(main__card);
 
                                 const main__photo=document.createElement('div');
@@ -252,6 +299,6 @@
             }
         }
         
-    </script>
+    </script> -->
 </body>
 </html>

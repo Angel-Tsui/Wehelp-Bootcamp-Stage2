@@ -118,7 +118,7 @@ if(token_o){
                 
                 // 刪除按鈕圖像
                 const selectedDetailsDelete = document.createElement("img");
-                selectedDetailsDelete.src="/static/images/delete.png";
+                selectedDetailsDelete.src="/static/images/icon_delete.svg";
                 selectedDeleteContainer.appendChild(selectedDetailsDelete);
 
                 totalPrice += parseInt(data[i]["price"])

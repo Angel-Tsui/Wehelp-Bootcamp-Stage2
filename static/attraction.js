@@ -109,12 +109,12 @@ fetch(src)
                 selected = document.querySelector("input[name='dorn']:checked").value;
                 // console.log(selected);
                 if(selected == "d"){
-                    day.src="/static/images/radiobtn_green.png"
-                    night.src="/static/images/radiobtn_white.png"
+                    day.src="/static/images/radiobtn_selected.svg"
+                    night.src="/static/images/radiobtn_not_selected.svg"
                     chosen.innerText="2000"
                 }else{
-                    day.src="/static/images/radiobtn_white.png"
-                    night.src="/static/images/radiobtn_green.png"
+                    day.src="/static/images/radiobtn_not_selected.svg"
+                    night.src="/static/images/radiobtn_selected.svg"
                     chosen.innerText="2500"
                 }
                 

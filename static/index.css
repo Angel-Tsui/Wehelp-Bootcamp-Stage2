@@ -114,7 +114,8 @@
 }
 
 .banner__word--search--typebox{
-    background-image: url('/static/images/InputBox.png');
+    /* background-image: url('/static/images/InputBox.png'); */
+    background-color: white;
     border-radius: 5px 0px 0px 5px;
     height: 46px;
     flex: none;
@@ -129,6 +130,7 @@
     margin: 15px;
     display: flex;
     align-items: center;
+    background-color: transparent;
 }
 
 .banner__word--search--typebox input:focus-visible{
@@ -136,7 +138,8 @@
 }
 
 .banner_word--search--buttonBg{
-    background-image: url('/static/images/SearchIconBg.png');
+    /* background-image: url('/static/images/SearchIconBg.png'); */
+    background-color: #489;
     border-radius: 0px 5px 5px 0px;
     border: 0px;
     width: 60px;
@@ -146,6 +149,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
 .banner_word--search--buttonicon{
@@ -168,6 +172,8 @@
     margin: 10px auto;
     overflow: hidden;
     position: relative;
+    display: flex;
+    align-items: center;
 }
 
 .main__mrt--left{
@@ -199,9 +205,32 @@
     background: linear-gradient(to left, white 60%, transparent);
 }
 
-.main__mrt--left img, .main__mrt--right img{
+.main__mrt--left span, 
+.main__mrt--right span{
+    background-color: white;
+    opacity: 0.7;
+    width: 32px;
+    height: 32px;
+    border: 1.5px solid #666;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
 }
+
+.main__mrt--left span span, 
+.main__mrt--right span span{
+    border: 0px;
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+    color: #4e4e4e;
+}
+
+/* .main__mrt--left img, .main__mrt--right img{
+    cursor: pointer;
+} */
 
 .main__mrt ul{
     display: flex;
@@ -211,6 +240,7 @@
     list-style: none;
     overflow-x: scroll;
     scroll-behavior: smooth;
+    align-items: center;
 }
 
 .main__mrt ul::-webkit-scrollbar{
@@ -241,6 +271,10 @@
     border: 1px solid #E8E8E8;
     border-radius: 5px;
     cursor: pointer;
+}
+
+.main__att1:hover{
+    box-shadow: 2px 2px 2px #919090;
 }
 
 .main__att1.show{

@@ -169,6 +169,10 @@
     cursor: pointer;
 }
 
+.confirm__details--btn:hover{
+    box-shadow: 2px 2px 2px rgb(47, 94, 106);
+}
+
 @media (max-width: 1200px){
     .welcomeMessage{width: 95%; margin-left: auto;}
     .nopreview{width: 90%}

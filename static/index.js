@@ -178,7 +178,7 @@ function load(){
                         const main__photoWd=document.createElement('span');
                         main__photoWd.innerText=data[i]["name"];
                         main__photoWd.className="main__att1--photo--word";
-                        main__photo.appendChild(main__photoWd);
+                        main__photoBg.appendChild(main__photoWd);
                         
                         const main__desc=document.createElement('div');
                         main__desc.className="main__att1--desc";

@@ -41,7 +41,7 @@
                 <div class="booking--title">訂購導覽行程</div>
                 <div class="booking--des">以此景點為中心的一日行程，帶您探索城市角落故事</div>
                 <div class="booking--form--date">選擇日期：
-                    <input type="date" placeholder="yyyy/mm/dd" name="date"/>
+                    <input type="date" min="today" id="date"/>
                     <!-- <div class="datepicker">
                         <input placeholder="yyyy/mm/dd" type="text" onfocus="(this.type='date')">
                         <img src="/static/images/calendar.png"/>
@@ -50,13 +50,13 @@
                 </div>
                 <div class="booking--form--time">
                     <span>選擇時間：</span>
-                    <label><img id="day" src="/static/images/radiobtn_green.png"/><input type="radio" value="d" name="dorn" checked>上半天</label>
-                    <label style="margin-left:10px"><img id="night" src="/static/images/radiobtn_white.png"/><input type="radio" value="n" name="dorn" id="n"/>下半天</label>
+                    <label><img id="day" src="/static/images/radiobtn_green.png"/><input type="radio" value="d" name="dorn" class="dorn" checked>上半天</label>
+                    <label style="margin-left:10px"><img id="night" src="/static/images/radiobtn_white.png"/><input type="radio" value="n" name="dorn" id="n" class="dorn"/>下半天</label>
                 </div>
                 <div class="booking--form--price">導覽費用：
-                    <span>新台幣2000元</span>
+                    <span>新台幣<span>2000</span>元</span>
                 </div>
-                <div class="booking--confirm" type="submit">開始預約行程</div>
+                <div class="booking--confirm">開始預約行程</div>
             </div>
         </div>
     </div>

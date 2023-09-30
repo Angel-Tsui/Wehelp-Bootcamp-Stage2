@@ -19,6 +19,33 @@ signin.addEventListener("click", function(){
     }
 })
 
+// 行程預定按鈕功能
+const plan = document.querySelector(".nav__right--plan");
+plan.addEventListener("click", function(){
+    console.log("plan", signin.innerText)
+    let token = window.localStorage.getItem("token");
+    if(token == null){
+        modal.showModal();
+    }
+    else{
+        console.log("logged in");
+        window.location = "/booking";
+    }
+})
+
+// const bookTour = document.querySelector(".booking--confirm");
+// bookTour.addEventListener("click", function(){
+//     console.log("this tour ok")
+//     let token = window.localStorage.getItem("token");
+//     if(token == null){
+//         modal.showModal();
+//     }
+//     else{
+//         console.log("logged in");
+//         window.location = "/booking";
+//     }
+// })
+
 // 完整表單畫面製作 (V)
 modal.innerHTML=`
                 <div class="completeform">
@@ -213,9 +240,24 @@ let verify = function(){
             return response.json();
         }).then((result) => {
             // console.log(result);
-            // console.log(result["data"]);
+            console.log(result["data"]);
             let status = result["data"];
             // console.log(status)
+
+            // booking頁面的welcome message處理
+            if(window.location.href.includes("/booking") ){
+                const welcomeName = document.querySelector(".welcomeMessage span");
+                welcomeName.innerText = result["data"]["name"];
+
+                // 自動填入 Contact Name 和 Contact Email 的内容
+                const contactName = document.querySelector("#contactName")
+                contactName.value = result["data"]["name"]
+
+                // 自動填入 Contact Name 和 Contact Email 的内容
+                const contactEmail = document.querySelector("#contactEmail")
+                contactEmail.value = result["data"]["email"]
+            }
+            
             const signin = document.querySelector(".nav__right--user");
             if(status == null){ 
                 signin.innerText = "登入/註冊";
@@ -224,5 +266,5 @@ let verify = function(){
                 signin.innerText = "登出系統";
             }
         })
-        }
+    }
 }

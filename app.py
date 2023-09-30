@@ -31,11 +31,11 @@ def bad_request(e):
 	result={"error":True, "message":"沒有該景點編號，請重新搜尋"}
 	return result
 
-# @app.errorhandler(404)
-# def not_found(e):
-# 	print(e, "@", request.url)
-# 	result={"error":True, "message":"查無此頁，請確認網址"}
-# 	return result
+@app.errorhandler(404)
+def not_found(e):
+	print(e, "@", request.url)
+	result={"error":True, "message":"查無此頁，請確認網址"}
+	return result
 
 @app.errorhandler(500)
 def server_error(e):
@@ -111,9 +111,9 @@ def signin():
 		if con.is_connected():
 			cursor=con.cursor(dictionary = True)
 			if request.method == "PUT":
-				print("PUT")
+				# print("PUT")
 				result = request.json
-				print(result)
+				# print(result)
 				useremail = result["email"]
 				userpassword = result["password"]
 				# print(useremail, userpassword)
@@ -153,6 +153,7 @@ def signin():
 				# print("token:", clean_token)
 
 				token = jwt.decode(clean_token, key, algorithms="HS256")
+				# print("needed_info: ", needed_info)
 				needed_info = {
 								"id" : token["id"],
 								"name" : token["name"],
@@ -353,5 +354,168 @@ def mrt():
 		if con.is_connected():
 			con.close()
 			print("MySQL connection is closed")	
+
+@app.route("/api/booking", methods=["POST","GET"])
+def prebook():
+	# print("request method: ", request.method)
+	try:
+		connectionpool=pooling.MySQLConnectionPool(
+			pool_name="mysqlpool",
+			pool_size=3,
+			pool_reset_session=True,
+			user="root",
+			password="",
+			host="localhost",
+			port=3306,
+			database="tp1"
+		)
+		# get connection object from the connection pool
+		con=connectionpool.get_connection()
+		cursor=con.cursor(dictionary = True)
+		if con.is_connected():
+			headers = {
+					'Authorization' : request.headers.get('Authorization'),
+					'Accept' : 'application/json',
+					'Content-Type' : 'application/json'
+			}
+			# print(headers)
+			encryp_token = headers["Authorization"]
+			# print(encryp_token)
+			clean_token = encryp_token.replace("Bearer ", "")
+			# print("token:", clean_token)
+
+			clean_token = clean_token.strip('\"')
+			token = jwt.decode(clean_token, key, algorithms="HS256")
+			# print("decoded", token, "userId", token["id"])
+			
+			if token:
+				userId = token["id"]
+				if request.method == "POST":
+					print("in POST")
+					result = request.json
+					attractionId = result["attractionId"]
+					date = result["date"]
+					time = result["time"]
+					price = result["price"]
+					# print(userId, attractionId, date, time, price)
+					cursor=cursor.execute("INSERT INTO booking(user_id, off_id, date, time, price)VALUES(%s,%s,%s,%s,%s)",(userId, attractionId, date, time, price))
+					con.commit()
+					message = {
+						"ok" : True
+					}
+				elif request.method == "GET":
+					print("in GET")
+					cursor.execute("SELECT attraction.id, attraction.off_id, attraction.name, attraction.address FROM attraction INNER JOIN booking ON attraction.off_id=booking.off_id INNER JOIN user ON booking.user_id=user.id WHERE user.id=%s",(userId,))
+					attractionDetails = cursor.fetchall()
+					# print("attractionDetails: ", attractionDetails, len(attractionDetails))
+					if len(attractionDetails) == 0:
+						message = {
+							"data" : None
+						}
+					else:
+						# print("in else")
+						all_data=[]
+						data={}
+						for x in range(len(attractionDetails)):
+							cursor.execute("SELECT*FROM booking WHERE user_id=%s",(userId,))
+							bookingInfo = cursor.fetchall()
+							# print("bookingInfo", bookingInfo)
+							cursor.execute("SELECT images FROM all_images WHERE att_id=%s",(attractionDetails[x]["id"],))
+							attractionImage = cursor.fetchall()
+							fImage = attractionImage[0]
+							Image = fImage["images"]
+							# print("fImage", fImage)
+							# print(attractionDetails, Image, bookingInfo)
+							y = {
+								"attraction" : {
+										"id" : attractionDetails[x]["off_id"],
+										"name" : attractionDetails[x]["name"],
+										"address" : attractionDetails[x]["address"],
+										"image" : Image
+									},
+									"date" : bookingInfo[x]["date"],
+									"time" : bookingInfo[x]["time"],
+									"price" : bookingInfo[x]["price"],
+									"bookingId" : bookingInfo[x]["id"]
+							}
+							# print("y", y)
+							data[str(x)] = y
+							all_data.append(data)
+							x+=1
+						# print(all_data, len(all_data))
+						message = {}
+						for d in range(len(all_data)):
+							message["data"] = all_data[d]
+			else:
+				message = {
+					"error" : True,
+					"message" : "請先登入"
+				}
+			return message
+	# catch any error due to connection issue
+	except Error as e:
+		print("Failed, Connection Problem", e)
+		return (500)
+	# close db connection and return the connection object to the connection pool for the next usage if it the object was connected
+	finally:
+		if con.is_connected():
+			con.close()
+			print("MySQL connection is closed")
+
+@app.route("/api/booking/<bookingId>", methods=["DELETE"])
+def delbooking(bookingId):
+	try:
+		connectionpool=pooling.MySQLConnectionPool(
+			pool_name="mysqlpool",
+			pool_size=3,
+			pool_reset_session=True,
+			user="root",
+			password="",
+			host="localhost",
+			port=3306,
+			database="tp1"
+		)
+		# get connection object from the connection pool
+		con=connectionpool.get_connection()
+		cursor=con.cursor(dictionary = True)
+		if con.is_connected():
+			headers = {
+					'Authorization' : request.headers.get('Authorization'),
+					'Accept' : 'application/json',
+					'Content-Type' : 'application/json'
+			}
+			# print(headers)
+			encryp_token = headers["Authorization"]
+			# print(encryp_token)
+			clean_token = encryp_token.replace("Bearer ", "")
+			# print("token:", clean_token)
+
+			token = jwt.decode(clean_token, key, algorithms="HS256")
+			print("decoded", token, "userId", token["id"])
+
+			if token:
+				print("in DELETE")
+				userId = token["id"]
+				print(userId, bookingId)
+				cursor.execute("DELETE FROM booking WHERE user_id=%s and id=%s",(userId, bookingId))
+				con.commit()
+				message = {
+					"ok" : True
+				}
+			else:
+				message = {
+					"error" : True,
+					"message" : "請先登入"
+				}
+			return message
+	# catch any error due to connection issue
+	except Error as e:
+		print("Failed, Connection Problem", e)
+		return (500)
+	# close db connection and return the connection object to the connection pool for the next usage if it the object was connected
+	finally:
+		if con.is_connected():
+			con.close()
+			print("MySQL connection is closed")
 
 app.run(host="0.0.0.0", port=3000)

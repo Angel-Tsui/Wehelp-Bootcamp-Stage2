@@ -6,11 +6,19 @@ body{
     flex-direction: column;
     min-height: 100vh;
     margin-top: 54px;
+    color: #666666;
 }
 
 a{
     text-decoration: none;
     color:#448899;
+}
+
+hr{
+    width: 1180px;
+    border: 0.5px solid #E8E8E8;
+    margin-top: 40px;
+    margin-bottom: 40px;
 }
 
 #signinclick, #signupclick{
@@ -59,12 +67,12 @@ a{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    
 }
 
 .nav__right--plan{
     padding: 10px;
     flex: none;
+    cursor: pointer;
 }
 
 .nav__right--user{
@@ -164,10 +172,6 @@ dialog::backdrop{
     cursor: pointer;
 }
 
-/* .switch span{
-    
-} */
-
 #formcontent_signin{
     display: none;
 }
@@ -181,7 +185,6 @@ dialog::backdrop{
     text-align: center;
     color: red;
 }
-
 
 .footer{
     background-color:#757575;
@@ -198,9 +201,11 @@ dialog::backdrop{
 }
 
 @media (max-width:1200px){
+    hr{width: 95%}
     .nav{width:100%}
 }
 
 @media (max-width:640px){
+    hr{width: 95%}
     .nav{width:100%}
 }

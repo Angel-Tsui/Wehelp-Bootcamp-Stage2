@@ -85,17 +85,37 @@ input[name="slider_btn"]{
 }
 
 .detail__display--leftClick{
-    /* justify-content: flex-start; */
     padding-left: 5px;
     z-index: 50;
     cursor: pointer;
 }
 
 .detail__display--rightClick{
-    /* justify-content: flex-end; */
     padding-right: 5px;
     z-index: 50;
     cursor: pointer;
+}
+
+.detail__display--leftClick span,
+.detail__display--rightClick span{
+    background-color: white;
+    opacity: 0.7;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.detail__display--leftClick span span, 
+.detail__display--rightClick span span{
+    border: 0px;
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+    color: #4e4e4e;
 }
 
 .detail__display--profile{
@@ -143,6 +163,8 @@ input[name="slider_btn"]{
 }
 
 .booking--form--date{
+    font-size: 16px;
+    font-weight: 700;
     display: flex;
     gap: 5px;
     margin-bottom: 15px;
@@ -150,6 +172,8 @@ input[name="slider_btn"]{
 }
 
 .booking--form--date input{
+    font-size: 16px;
+    font-weight: 500;
     border: none;
     background-color: white;
     width: 193px;
@@ -237,7 +261,6 @@ input[name='dorn']{
     color: white;
     font-size: 19px;
     font-weight: 400;
-    line-height: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -245,12 +268,22 @@ input[name='dorn']{
     cursor: pointer;
 }
 
-hr{
+.booking--confirm:hover{
+    box-shadow: 2px 2px 2px rgb(47, 94, 106);
+}
+
+.error_message{
+    color: red;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* hr{
     width: 1180px;
     border: 0.5px solid #E8E8E8;
     margin-top: 40px;
     margin-bottom: 40px;
-}
+} */
 
 .detail__intro{
     width: 1200px;
@@ -301,7 +334,6 @@ hr{
     .detail__display{width:100%}
     .detail__display--pics{width: 45%;}
     .detail__display--profile{max-width: 600px; width:45%; padding-left:10px; padding-right:10px; margin-left:2%;}
-    hr{width: 95%;}
     .detail__intro{width:95%; margin-bottom: 134px;}
     .booking--form--date input{width: 50%;}
 }
@@ -312,7 +344,6 @@ hr{
     .detail__display--profile{max-width: 600px; width:45%; padding-left:10px; padding-right:10px; margin-left:2%;}
     .detail__display--profile--title{margin-bottom: 10px}
     .detail__display--profile--short{margin-bottom: 10px}
-    hr{width: 95%;}
     .booking--form--time span{flex: 100%}
     .detail__intro{width:95%; margin-bottom: 134px;}
     .booking--form--date input{width: 50%;}
@@ -324,7 +355,6 @@ hr{
     .detail__display--gallery_img{width: 100%;}
     .slider{margin-top: 315px;}
     .detail__display--profile{width:95%; padding-left:10px; padding-right:10px;}
-    hr{width: 95%;}
     .booking--form--time span{flex: none}
     .detail__intro{width:95%;}
 }

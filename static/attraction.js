@@ -66,7 +66,6 @@ fetch(src)
             else{
                 count = totalImgCount;
             }
-            
         })
 
         display_leftClick.addEventListener("click", function(){
@@ -78,8 +77,7 @@ fetch(src)
             if (count >= 0){
                 slider_btns.forEach((btn) => {
                 btn.classList.remove('active');
-            })
-
+                })
             slider_btns[count].classList.add('active');
             }
             else{
@@ -88,10 +86,22 @@ fetch(src)
         })
 
         // datepicker format
+        let currentDate = new Date()
+        let yyyy = currentDate.getFullYear();
+        let mm = currentDate.getMonth()+1;
+        mm = "0" + mm;
+        let dd = currentDate.getDate();
+        let today = yyyy + "-" + mm + "-" + dd;
+        // console.log(today);
+        availableDates = document.querySelector(".booking--form--date input")
+        availableDates.setAttribute("min", today)
+        // console.log(availableDates)
+        availableDates.min = today
+        // console.log(availableDates.min)
 
         // day or night selection and pricing
         let radioSelect = document.querySelectorAll("input[name='dorn']")
-        let chosen = document.querySelector(".booking--form--price span")
+        let chosen = document.querySelector(".booking--form--price span span")
         let day = document.querySelector("#day");
         let night = document.querySelector("#night");
         radioSelect.forEach(radioSelect => {
@@ -99,13 +109,13 @@ fetch(src)
                 selected = document.querySelector("input[name='dorn']:checked").value;
                 // console.log(selected);
                 if(selected == "d"){
-                    day.src="/static/images/radiobtn_green.png"
-                    night.src="/static/images/radiobtn_white.png"
-                    chosen.innerText="新台幣2000元"
+                    day.src="/static/images/radiobtn_selected.svg"
+                    night.src="/static/images/radiobtn_not_selected.svg"
+                    chosen.innerText="2000"
                 }else{
-                    day.src="/static/images/radiobtn_white.png"
-                    night.src="/static/images/radiobtn_green.png"
-                    chosen.innerText="新台幣2500元"
+                    day.src="/static/images/radiobtn_not_selected.svg"
+                    night.src="/static/images/radiobtn_selected.svg"
+                    chosen.innerText="2500"
                 }
                 
             })
@@ -126,3 +136,69 @@ fetch(src)
         const transport_content = document.querySelector(".detail__intro--transport--content");
         transport_content.innerText = data["transport"];
     })
+
+const bookTour = document.querySelector(".booking--confirm");
+bookTour.addEventListener("click", function(){
+    console.log("this tour ok")
+    let token = window.localStorage.getItem("token");
+    if(token == null){
+        modal.showModal();
+    }
+    else{
+        console.log("logged in");
+        let src = "/api/booking"
+
+        let attractionId = (fullLink.slice(fullLink.indexOf("n/")+1)).replace("/","")
+        console.log(attractionId)
+        let chosenDate = document.querySelector(".booking--form--date input").value;
+        if (chosenDate != ""){
+            date = chosenDate
+            console.log(date)
+        }
+        else{
+            console.log("no date selected")
+            const display_profile = document.querySelector(".detail__display--profile--booking");
+            const errorMessage = document.createElement("div");
+            errorMessage.innerText = "請選擇日期";
+            errorMessage.className = "error_message";
+            display_profile.appendChild(errorMessage);
+            return
+        }
+
+        let price = document.querySelector(".booking--form--price span span").innerText
+        // console.log(price)
+        if (price == 2000){
+            time = "morning"
+        }
+        else{
+            time = "afternoon"
+        }
+        console.log(attractionId, date, time, price)
+        fetch (src, {
+            method : "POST",
+            headers : {
+                "Content-Type" : "application/json; charset=UTF-8",
+                "Authorization" : "Bearer " + token,
+            },
+            body:JSON.stringify(
+                {
+                    "attractionId" : attractionId,
+                    "date" : date,
+                    "time" : time,
+                    "price" : price
+                }
+            )
+        }).then((res) => {
+            return res.json();
+        }).then((end) => {
+            console.log(end);
+            if(Object.keys(end) == "ok"){
+                window.location = "/booking";
+            }
+            else{
+                const errorMessage = document.querySelector(".error_message")
+                errorMessage.innerText = end["message"]
+            }
+        })
+    }
+})

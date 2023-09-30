@@ -1,0 +1,201 @@
+.nav__bg{
+    border-bottom: 0.1px solid #E8E8E8;
+}
+
+.welcomeMessage{
+    width: 1000px;
+    font-size: 16px;
+    font-weight: 700;
+    margin-top: 40px;
+    margin-bottom: 30px;
+}
+
+.nopreview{
+    width: 1000px;
+}
+
+.itemContainer{
+    width: 980px;
+}
+
+.selectedItem{
+    /* width: 980px; */
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.selectedItem__img{
+    width: 266px;
+    height: 200px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.selectedItem__details{
+    width: 700px;
+    margin-left: 20px;
+    position: relative;
+}
+
+.selectedItem__details--title{
+    width: inherit;
+    color: #448899;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    display: flex;
+}
+
+.selectedItem__details--title span{
+    display: flex;
+    flex-wrap: wrap;
+    flex: 60%;
+}
+
+.selectedItem__details--delete{
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+}
+
+.selectedItem__details--date, 
+.selectedItem__details--time, 
+.selectedItem__details--price,
+.selectedItem__details--location{
+    width: inherit;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    display: flex;
+    line-height: 20px;
+}
+
+.selectedItem__details--date span, 
+.selectedItem__details--time span, 
+.selectedItem__details--price span,
+.selectedItem__details--location span{
+    font-size: 16px;
+    font-weight: 500;
+    display: flex;
+    flex-wrap: wrap;
+    flex: 70%;
+}
+
+.collectInfo{
+    width: 1200px;
+}
+
+.contactForm, .paymentForm{
+    width: 980px;
+    font-size: 19px;
+    font-weight: 700;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.anyForm__title{
+    width: inherit;
+    font-size: 19px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.anyForm{
+    width: inherit;
+    height: 38px;
+    font-size: 16px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    padding-right: 4px;
+    padding-bottom: 15px;
+}
+
+.anyForm span input{
+    width: 180px;
+    font-size: 16px;
+    font-weight: 500;
+    color: black;
+    padding: 10px;
+    background: white;
+    display: flex;
+    align-items: center;
+    border: 1px solid #E8E8E8;
+    border-radius: 5px;
+}
+
+.contactForm__ps{
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.confirm{
+    width: 980px;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 62px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.confirm__details{
+    display: flex;
+    flex-direction: column;
+}
+.confirm__details--price{
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.confirm__details--btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    background-color: #489;
+    color: white;
+    font-size: 19px;
+    font-weight: 400;
+    padding: 10px 20px 10px 20px;
+    cursor: pointer;
+}
+
+.confirm__details--btn:hover{
+    box-shadow: 2px 2px 2px rgb(47, 94, 106);
+}
+
+@media (max-width: 1200px){
+    .welcomeMessage{width: 95%; margin-left: auto;}
+    .nopreview{width: 90%}
+    .itemContainer{width: 90%; margin-left: auto; margin-right: auto;}
+    .selectedItem__img{width: 40%; height: 256px; margin-bottom: 20px;}
+    .selectedItem__details{width: 55%; margin-left: 0px; position: relative;}
+    .selectedItem__details--title, .selectedItem__details--date, .selectedItem__details--time, .selectedItem__details--price{width: 90%;}
+    .selectedItem__details--location{width: 90%; margin-bottom: 0px;}
+    .collectInfo{width: 95%}
+    .contactForm, .paymentForm{width: 95%;}
+    .confirm{width: 95%;}
+}
+
+@media (max-width: 640px){
+    .welcomeMessage{width: 95%; margin-left: auto;}
+    .nopreview{width: 90%}
+    .itemContainer{width: 90%; margin-left: auto; margin-right: auto;}
+    .selectedItem{flex-direction: column;}
+    .selectedItem__img{width: 100%; height: 256px; margin-bottom: 20px;}
+    .selectedItem__details{width: 100%; margin-left: 0px; position: relative;}
+    .selectedItem__details--location{margin-bottom: 0px;}
+    .selectedItem__details--delete{width: inherit; position: relative; display: flex; justify-content: flex-end;}
+    .collectInfo{width: 95%}
+    .contactForm, .paymentForm{width: 95%;}
+    .confirm{width: 95%;}
+}

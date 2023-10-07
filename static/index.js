@@ -201,3 +201,10 @@ function load(){
             })
     }
 }
+
+// 查看過往訂單連結
+const checkOrder_link = document.querySelector(".checkOrder_link");
+checkOrder_link.addEventListener("click", () => {
+    console.log("redirect")
+    window.location.href = "/order";
+})

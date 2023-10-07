@@ -1,0 +1,95 @@
+/* .main{
+    width: 1200px;
+} */
+
+.main__title{
+    width: 1000px;
+    font-size: 16px;
+    font-weight: 700;
+    margin-top: 40px;
+    margin-bottom: 30px;
+}
+
+.main__orders{
+    width: 1000px;
+    font-weight: 500;
+    color: #448899;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.main__orders span{
+    border: 1px solid #448899;
+    border-radius: 5px;
+    padding: 10px;
+    width: fit-content;
+    cursor: pointer;
+    text-align: center;
+}
+
+.main__orders span:hover, 
+.main__orders span.active{
+    background-color: #448899;
+    color: white;
+}
+
+.main__orders__list{
+    margin-bottom: 40px;
+}
+
+.main__orders__details--trip{
+    margin-top: 20px;
+}
+
+.tripContainer{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.tripContainer:not(:first-child){
+    margin-top: 20px;
+}
+
+.tripImage{
+    width: 266px;
+    height: 200px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.tripInfo{
+    margin-left: 20px;
+}
+
+.titles{
+    font-weight: 700;
+    margin-top: 15px;
+    line-height: 16px;
+    display: flex;
+}
+
+.content{
+    font-weight: 500;
+}
+
+#totalPrice{
+    margin-top: 20px;
+}
+
+#tripName{
+    color: #448899;
+}
+
+@media (max-width: 1200px){
+    .main__title{width: 95%;}
+    .main__orders{width: 95%;}
+}
+
+@media (max-width: 640px){
+    .main__title{width: 95%; text-align: center;}
+    .main__orders{width: 95%; justify-content: center;}
+    .tripContainer:not(:first-child){margin-top: 40px;}
+    .tripImage{width: 100%;}
+}

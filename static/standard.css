@@ -186,6 +186,31 @@ dialog::backdrop{
     color: red;
 }
 
+.checkOrder{
+    margin-top: 20px;
+    width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    background-color: #489;
+    color: white;
+    font-size: 19px;
+    font-weight: 400;
+    padding: 10px 20px 10px 20px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.checkOrder:hover{
+    box-shadow: 2px 2px 2px rgb(47, 94, 106);
+}
+
+.checkOrder_link{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 .footer{
     background-color:#757575;
     display: flex;

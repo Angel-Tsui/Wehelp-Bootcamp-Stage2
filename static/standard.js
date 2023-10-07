@@ -4,6 +4,14 @@ const modal = document.createElement("dialog");
 modal.className = ".modal";
 body.appendChild(modal)
 
+// 如果直接打網址進來，且沒有登錄的狀態，會被導回首頁
+let confirm = function (){
+    let token = window.localStorage.getItem("token")
+    if(token == null){
+        window.location = "/"
+    }
+}
+
 // 打開表單，先到注冊頁面
 const signin = document.querySelector(".nav__right--user");
 signin.addEventListener("click", function(){
@@ -164,7 +172,6 @@ let signinbe = function(){
     })
 }
 
-
 // 注冊按鈕
 const registerbtn = document.querySelector("#registerbtn");
 // let inputs = document.querySelectorAll(".signininfo")
@@ -240,12 +247,12 @@ let verify = function(){
             return response.json();
         }).then((result) => {
             // console.log(result);
-            console.log(result["data"]);
+            // console.log(result["data"]);
             let status = result["data"];
             // console.log(status)
 
-            // booking頁面的welcome message處理
-            if(window.location.href.includes("/booking") ){
+            // booking 頁面的 welcome message 處理
+            if(window.location.href.includes("/booking")){
                 const welcomeName = document.querySelector(".welcomeMessage span");
                 welcomeName.innerText = result["data"]["name"];
 
@@ -256,6 +263,11 @@ let verify = function(){
                 // 自動填入 Contact Name 和 Contact Email 的内容
                 const contactEmail = document.querySelector("#contactEmail")
                 contactEmail.value = result["data"]["email"]
+            }
+            // thankyou 頁面的 confirm message 處理
+            else if (window.location.href.includes("/thankyou")){
+                const confirmMessage = document.querySelector(".confirmMessage span")
+                confirmMessage.innerText = result["data"]["name"];
             }
             
             const signin = document.querySelector(".nav__right--user");

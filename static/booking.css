@@ -130,6 +130,37 @@
     border-radius: 5px;
 }
 
+.tpfield{
+    height: 18px;
+    width: 180px;
+    font-size: 16px;
+    font-weight: 500;
+    color: black;
+    padding: 10px;
+    background: white;
+    display: flex;
+    align-items: center;
+    border: 1px solid #E8E8E8;
+    border-radius: 5px;
+}
+
+#cardType{
+    color: green;
+    margin-left: 10px;
+}
+
+/* #card:valid,
+#exp:valid,
+#ccv:valid{
+    color: 'green'
+}
+
+#card:invalid,
+#exp:invalid,
+#ccv:invalid{
+    color: 'red'
+} */
+
 .contactForm__ps{
     font-size: 16px;
     font-weight: 700;
@@ -167,10 +198,27 @@
     font-weight: 400;
     padding: 10px 20px 10px 20px;
     cursor: pointer;
+    user-select: none;
 }
 
 .confirm__details--btn:hover{
     box-shadow: 2px 2px 2px rgb(47, 94, 106);
+}
+
+.confirm__details--btn[disabled]{
+    background-color: grey;
+    pointer-events: none;
+}
+
+.failmessage{
+    color: red;
+    margin-top: 10px;
+    text-align: right;
+}
+
+.checkOrder_link{
+    color:#448899;
+    text-align: right;
 }
 
 @media (max-width: 1200px){

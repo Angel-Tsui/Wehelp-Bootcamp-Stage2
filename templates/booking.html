@@ -8,6 +8,8 @@
     <link rel="stylesheet" type="text/css" a href ="/static\booking.css">
     <script defer src="/static/standard.js"></script>
     <script defer src="/static/booking.js"></script>
+    <script src="https://js.tappaysdk.com/sdk/tpdirect/v5.14.0"></script>
+    <!-- <script defer src="/static/payment.js"></script> -->
 </head>
 <body onload="verify();confirm()">
     <div class="nav__bg">
@@ -21,7 +23,9 @@
     </div>
 
     <div class="welcomeMessage">您好，<span></span>，待預訂的行程如下：</div>
-    <div class="nopreview" style="display: none;">目前沒有任何待預訂的行程</div>
+    <div class="nopreview" style="display: none;">目前沒有任何待預訂的行程
+        <div class="checkOrder">查看過往訂單</div>
+    </div>
     <div class="itemContainer">
         <div class="selectedItem">
         <!-- <div class="selectedItem__img"></div>
@@ -48,23 +52,36 @@
                 <span><input type="text" id="contactEmail" required></span>
             </div>
             <div class="anyForm">手機號碼：
-                <span><input type="text" id="contactNumber" required></span>
+                <span><input type="number" id="contactNumber" required></span>
             </div>
             <div class="contactForm__ps">請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</div>
         </div>
 
         <hr/>
 
+        <!-- <div class="paymentForm">
+            <div class="anyForm__title">信用卡付款資訊</div>
+            <div class="anyForm">卡片號碼：
+                <span class="tpfield" id="card"><input type="text" required></span>
+            </div>
+            <div class="anyForm">過期時間：
+                <span class="tpfield" id="exp"><input type="text" required></span>
+            </div>
+            <div class="anyForm">驗證密碼：
+                <span class="tpfield" id="ccv"><input type="text" required></span>
+            </div>
+        </div> -->
         <div class="paymentForm">
             <div class="anyForm__title">信用卡付款資訊</div>
             <div class="anyForm">卡片號碼：
-                <span><input type="text" id="card" placeholder="**** **** **** ****" required></span>
+                <span class="tpfield" id="card"></span>
+                <span id="cardType"></span>
             </div>
             <div class="anyForm">過期時間：
-                <span><input type="text" id="exp" placeholder="MM / YY" required></span>
+                <span class="tpfield" id="exp"></span>
             </div>
             <div class="anyForm">驗證密碼：
-                <span><input type="text" id="cvv" placeholder="CVV" required></span>
+                <span class="tpfield" id="ccv"></span>
             </div>
         </div>
 
@@ -73,11 +90,12 @@
         <div class="confirm">
             <div class="confirm__details">
                 <div class="confirm__details--price"></div>
-                <div type="submit" class="confirm__details--btn">確認訂購並付款</div>
+                <div class="confirm__details--btn" disabled>確認訂購並付款</div>
+                <div class="failmessage"></div>
+                <div class="checkOrder_link">點擊查看過往訂單</div>
             </div>
         </div>
     </div>
-    
 
     <div class="footer">COPYRIGHT © 2021 台北一日遊</div>
 </body>

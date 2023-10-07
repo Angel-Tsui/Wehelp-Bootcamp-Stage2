@@ -1,0 +1,27 @@
+.main_content{
+    width: 1200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+.confirmMessage{
+    text-align: center;
+}
+
+.order_number{
+    text-align: center;
+    color: #448899;
+    font-weight: bold;
+    margin-top: 10px;
+    font-size: 18px;
+}
+
+.checkOrder{
+    margin-top: 30px;
+}
+
+@media (max-width:1200px){
+    .main_content{width: 100%;}
+}

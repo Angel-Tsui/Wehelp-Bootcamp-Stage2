@@ -712,7 +712,7 @@ def searchOrder(orderNumber):
 			if token:
 				userId = token["id"]
 
-				cursor.execute("SELECT booking.order_number, user.id, user.email, user.phone, booking.payment_status, booking.off_id, attraction.name, attraction.address, booking.date, booking.time, booking.price FROM user INNER JOIN booking ON user.id=booking.user_id INNER JOIN attraction ON attraction.off_id=booking.off_id WHERE booking.order_number=%s and user.id=%s",(orderNumber, userId))
+				cursor.execute("SELECT booking.order_number, user.id, user.email, user.phone, booking.payment_status, booking.off_id, attraction.id, attraction.name, attraction.address, booking.date, booking.time, booking.price FROM user INNER JOIN booking ON user.id=booking.user_id INNER JOIN attraction ON attraction.off_id=booking.off_id WHERE booking.order_number=%s and user.id=%s",(orderNumber, userId))
 				user_info = cursor.fetchall()
 
 				if user_info:
@@ -738,7 +738,10 @@ def searchOrder(orderNumber):
 						price = x["price"]
 						all_price.append(price)
 
-						cursor.execute("SELECT images FROM all_images WHERE att_id=%s",(off_id,))
+						att_id = x["id"]
+						# print(att_id)
+
+						cursor.execute("SELECT images FROM all_images WHERE att_id=%s",(att_id,))
 						images = cursor.fetchall()
 						image = images[0]["images"]
 
@@ -827,7 +830,7 @@ def getAllOrders():
 			if token:
 				userId = token["id"]
 				print("check", userId)
-				cursor.execute("SELECT DISTINCT order_number FROM booking WHERE payment_status=0 and user_id=%s",(userId,))
+				cursor.execute("SELECT DISTINCT order_number FROM booking WHERE payment_status=0 and user_id=%s ORDER BY id DESC",(userId,))
 				orders = cursor.fetchall()
 				print(orders)
 				all_orders = []

@@ -224,14 +224,13 @@ let signupbe = function(){
         else{
             console.log("error email")
             errormessage.innerText = "請輸入正確的電子郵件"
-        }
-        
-    }   
+        }   
+    }
 }
 
 // 在每一次網頁載入的時候檢查會員的登入狀態
 let verify = function(){
-    console.log("verifying")
+    // console.log("verifying")
     token_o = window.localStorage.getItem("token");
     if(token_o){
         token = token_o.replace(/"/g,"");

@@ -20,7 +20,7 @@ if(token_o){
     }).then((data) => {
         // console.log(data)
         orders = data["data"]
-        console.log(orders)
+        // console.log(orders)
 
         // 如果有過往訂單，把所有單號碼顯示出來，讓用家點擊查看詳情
         const ordersList = document.querySelector(".main__orders")
@@ -39,6 +39,8 @@ if(token_o){
                 }
                 ordersList.appendChild(eachOrder)
             }
+            let latestOrders = document.querySelectorAll(".main__orders span")[0]
+            latestOrders.click();
         }
         else{
             const noOrder = document.createElement("div")
@@ -67,8 +69,8 @@ let getDetails = function(order_detail){
 
 // 把取到的資料顯示到頁面上
 let displayData = function(data){
-    // console.log(data)
     data = data["data"]
+    // console.log(data)
 
     const main__orders__list = document.querySelector(".main__orders__list")
     main__orders__list.innerText = ""

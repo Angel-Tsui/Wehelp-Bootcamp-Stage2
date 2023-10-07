@@ -830,7 +830,7 @@ def getAllOrders():
 			if token:
 				userId = token["id"]
 				print("check", userId)
-				cursor.execute("SELECT DISTINCT order_number, id FROM booking WHERE payment_status=0 and user_id=%s ORDER BY id DESC",(userId,))
+				cursor.execute("SELECT DISTINCT order_number FROM booking WHERE payment_status=0 and user_id=%s",(userId,))
 				orders = cursor.fetchall()
 				print("orders", orders)
 				all_orders = []

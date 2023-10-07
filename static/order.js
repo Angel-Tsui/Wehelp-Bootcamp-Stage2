@@ -39,7 +39,9 @@ if(token_o){
                 }
                 ordersList.appendChild(eachOrder)
             }
-            let latestOrders = document.querySelectorAll(".main__orders span")[0]
+            let latestOrders = document.querySelectorAll(".main__orders span")
+            latestOrders = latestOrders[latestOrders.length -1]
+            // console.log(latestOrders.length -1)
             latestOrders.click();
         }
         else{

@@ -89,8 +89,9 @@ fetch(src)
         let currentDate = new Date()
         let yyyy = currentDate.getFullYear();
         let mm = currentDate.getMonth()+1;
-        mm = "0" + mm;
+        mm = String(mm).padStart(2,"0");
         let dd = currentDate.getDate();
+        dd = String(dd).padStart(2,"0");
         let today = yyyy + "-" + mm + "-" + dd;
         // console.log(today);
         availableDates = document.querySelector(".booking--form--date input")

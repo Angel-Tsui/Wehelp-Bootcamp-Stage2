@@ -157,6 +157,12 @@
     flex: none;
 }
 
+.checkOrder_link{
+    width: fit-content;
+    margin-top: 15px;
+    color: white;
+}
+
 .main{
     display: flex;
     flex-direction: column;

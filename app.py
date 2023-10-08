@@ -11,6 +11,8 @@ import mysql.connector
 from mysql.connector import Error
 from mysql.connector import pooling
 
+import requests
+
 # Pages
 @app.route("/")
 def index():
@@ -24,6 +26,10 @@ def booking():
 @app.route("/thankyou")
 def thankyou():
 	return render_template("thankyou.html")
+
+@app.route("/order")
+def checkorder():
+	return render_template("order.html")
 
 @app.errorhandler(400)
 def bad_request(e):
@@ -374,9 +380,9 @@ def prebook():
 		cursor=con.cursor(dictionary = True)
 		if con.is_connected():
 			headers = {
-					'Authorization' : request.headers.get('Authorization'),
-					'Accept' : 'application/json',
-					'Content-Type' : 'application/json'
+				'Authorization' : request.headers.get('Authorization'),
+				'Accept' : 'application/json',
+				'Content-Type' : 'application/json'
 			}
 			# print(headers)
 			encryp_token = headers["Authorization"]
@@ -405,7 +411,7 @@ def prebook():
 					}
 				elif request.method == "GET":
 					print("in GET")
-					cursor.execute("SELECT attraction.id, attraction.off_id, attraction.name, attraction.address FROM attraction INNER JOIN booking ON attraction.off_id=booking.off_id INNER JOIN user ON booking.user_id=user.id WHERE user.id=%s",(userId,))
+					cursor.execute("SELECT attraction.id, attraction.off_id, attraction.name, attraction.address FROM attraction INNER JOIN booking ON attraction.off_id=booking.off_id INNER JOIN user ON booking.user_id=user.id WHERE user.id=%s and booking.payment_status=1",(userId,))
 					attractionDetails = cursor.fetchall()
 					# print("attractionDetails: ", attractionDetails, len(attractionDetails))
 					if len(attractionDetails) == 0:
@@ -417,9 +423,9 @@ def prebook():
 						all_data=[]
 						data={}
 						for x in range(len(attractionDetails)):
-							cursor.execute("SELECT*FROM booking WHERE user_id=%s",(userId,))
+							cursor.execute("SELECT*FROM booking WHERE user_id=%s and payment_status=1",(userId,))
 							bookingInfo = cursor.fetchall()
-							# print("bookingInfo", bookingInfo)
+							print("bookingInfo", bookingInfo)
 							cursor.execute("SELECT images FROM all_images WHERE att_id=%s",(attractionDetails[x]["id"],))
 							attractionImage = cursor.fetchall()
 							fImage = attractionImage[0]
@@ -438,11 +444,11 @@ def prebook():
 									"price" : bookingInfo[x]["price"],
 									"bookingId" : bookingInfo[x]["id"]
 							}
-							# print("y", y)
+							print("y", y)
 							data[str(x)] = y
 							all_data.append(data)
 							x+=1
-						# print(all_data, len(all_data))
+						print("all_data", all_data, len(all_data))
 						message = {}
 						for d in range(len(all_data)):
 							message["data"] = all_data[d]
@@ -480,9 +486,9 @@ def delbooking(bookingId):
 		cursor=con.cursor(dictionary = True)
 		if con.is_connected():
 			headers = {
-					'Authorization' : request.headers.get('Authorization'),
-					'Accept' : 'application/json',
-					'Content-Type' : 'application/json'
+				'Authorization' : request.headers.get('Authorization'),
+				'Accept' : 'application/json',
+				'Content-Type' : 'application/json'
 			}
 			# print(headers)
 			encryp_token = headers["Authorization"]
@@ -517,5 +523,334 @@ def delbooking(bookingId):
 		if con.is_connected():
 			con.close()
 			print("MySQL connection is closed")
+
+@app.route("/api/orders", methods=["POST"])
+def order():
+	try:
+		connectionpool=pooling.MySQLConnectionPool(
+			pool_name="mysqlpool",
+			pool_size=3,
+			pool_reset_session=True,
+			user="root",
+			password="",
+			host="localhost",
+			port=3306,
+			database="tp1"
+		)
+		# get connection object from the connection pool
+		con=connectionpool.get_connection()
+		cursor=con.cursor(dictionary = True)
+		if con.is_connected():
+			headers = {
+				'Authorization' : request.headers.get('Authorization'),
+				'Accept' : 'application/json',
+				'Content-Type' : 'application/json'
+			}
+			# print(headers)
+			encryp_token = headers["Authorization"]
+			# print(encryp_token)
+			clean_token = encryp_token.replace("Bearer ", "")
+			# print("token:", clean_token)
+
+			clean_token = clean_token.strip('\"')
+			token = jwt.decode(clean_token, key, algorithms="HS256")
+			# print("decoded", token, "userId", token["id"])
+			
+			if token:
+				userId = token["id"]
+				result = request.json
+				# print(result)
+				user_phone = result["order"]["contact"]["phone"]
+				# print(user_phone)
+
+
+
+
+				trip_info = result["order"]["trip"]
+				order_number = result["prime"][-15:]
+				print("trip_info", trip_info)
+				# 把電話號碼的資料更新到 user 資料表中
+				cursor.execute("UPDATE user SET phone=%s WHERE id=%s",(user_phone, userId))
+				# 把資料放到資料庫 orders 資料表裏，目前所有 payment 的 status 都是 1，即還沒有付款
+				for x in trip_info:
+					bookingId = trip_info[x]["bookingId"]
+					# print(userId, bookingId, order_number)
+
+					# 把 order_number 更新到 booking 資料表
+					print("order_number & bookingID", order_number, type(order_number), bookingId)
+					cursor.execute("UPDATE booking SET order_number=%s WHERE id=%s and user_id=%s",(order_number, bookingId, userId))
+
+					# cursor.execute("INSERT INTO orders(user_id, booking_id, order_number)VALUES(%s,%s,%s)",(userId, bookingId, order_number))
+					# con.commit()
+				
+				# 取得所需資訊，準備傳送到 TapPay API
+				# print(result)
+				prime = result["prime"]
+				amount = result["order"]["price"]
+				contact = result["order"]["contact"]
+				# print(prime, amount, contact)
+				card_holder = {
+					"phone_number" : contact["phone"],
+					"name" : contact["name"],
+					"email" : contact["email"]
+				}
+				data = {
+					"partner_key": "partner_erH47Tx5VSSlIfEWS6PfYn1Usn5zM62jBr87PJlJom4hSnp9tDu0SNNb",
+					"prime" : prime,
+					"amount" : amount,
+					"merchant_id" : "AngelWehelp_CTBC",
+					"details" : "台北一日遊",
+					"cardholder" : card_holder
+				}
+				data=json.dumps(data)
+				# print(type(data), data)
+				# print(prime, amount, contact, card_holder)
+				cursor.execute("SELECT * FROM booking WHERE order_number=%s",(order_number,))
+				# cursor.execute("SELECT * FROM orders WHERE order_number=%s",(order_number,))
+				before=cursor.fetchall()
+				# print("before", before)
+
+				# 連接到 TapPay 的 API 完成付款程序
+				src = "https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime"
+				headers = {"Content-Type": "application/json; charset=utf-8", "x-api-key":"partner_erH47Tx5VSSlIfEWS6PfYn1Usn5zM62jBr87PJlJom4hSnp9tDu0SNNb"}
+				response = requests.post(src, headers=headers, data=data)
+				# print("response", response.status_code)
+
+				result = response.json()
+				# print("result", result)
+				payment_status = result["status"]
+				# print(payment_status)
+
+				if payment_status == 0:
+					# 更新orders資料表的訂單 status
+					cursor.execute("UPDATE booking SET payment_status=%s WHERE user_id=%s",(payment_status, userId))
+					# cursor.execute("UPDATE orders SET payment_status=%s WHERE user_id=%s",(payment_status, userId))
+					con.commit()
+
+					# 最後看看是否所有 payment 的 status，再把結果送到前端
+					cursor.execute("SELECT * FROM booking WHERE order_number=%s",(order_number,))
+					# cursor.execute("SELECT * FROM orders WHERE order_number=%s",(order_number,))
+					user_order=cursor.fetchall()
+					# print("after", user_order)
+					confirm = []
+					for x in user_order:
+						if x["payment_status"] == 0:
+							confirm.append(x["id"])
+					# print(confirm)
+
+					# print(len(confirm), len(user_order))
+					if len(confirm) == len(user_order):
+						status = 0
+						message = "付款成功"
+					else:
+						status = 1
+						message = "付款失敗，請確認資訊"
+
+					message = {
+						"data" : {
+							"number" : order_number,
+							"payment" : {
+								"status" : status,
+								"message" : message
+							}
+						}
+					}
+					
+					# 把 booking 資料表裏的相關訂單刪除
+					# for q in user_order:
+					# 	cursor.execute("DELETE FROM booking WHERE user_id=%s and id=%s",(userId, q["booking_id"]))
+					# 	con.commit()
+				else:
+					message = {
+						"error" : True,
+						"message" : "資料錯誤，請重新嘗試"
+					}
+				return message
+
+	# catch any error due to connection issue
+	except Error as e:
+		print("Failed, Connection Problem", e)
+		return (500)
+	# close db connection and return the connection object to the connection pool for the next usage if it the object was connected
+	finally:
+		if con.is_connected():
+			con.close()
+			print("MySQL connection is closed")
+
+@app.route("/api/order/<orderNumber>")
+def searchOrder(orderNumber):
+	try:
+		connectionpool=pooling.MySQLConnectionPool(
+			pool_name="mysqlpool",
+			pool_size=3,
+			pool_reset_session=True,
+			user="root",
+			password="",
+			host="localhost",
+			port=3306,
+			database="tp1"
+		)
+		# get connection object from the connection pool
+		con=connectionpool.get_connection()
+		cursor=con.cursor(dictionary = True)
+		if con.is_connected():
+			headers = {
+				'Authorization' : request.headers.get('Authorization'),
+				'Accept' : 'application/json',
+				'Content-Type' : 'application/json'
+			}
+			# print(headers)
+			encryp_token = headers["Authorization"]
+			# print(encryp_token)
+			clean_token = encryp_token.replace("Bearer ", "")
+			# print("token:", clean_token)
+
+			clean_token = clean_token.strip('\"')
+			token = jwt.decode(clean_token, key, algorithms="HS256")
+			print("decoded", token, "userId", token["id"])
+			
+			if token:
+				userId = token["id"]
+
+				cursor.execute("SELECT booking.order_number, user.id, user.email, user.phone, booking.payment_status, booking.off_id, attraction.id, attraction.name, attraction.address, booking.date, booking.time, booking.price FROM user INNER JOIN booking ON user.id=booking.user_id INNER JOIN attraction ON attraction.off_id=booking.off_id WHERE booking.order_number=%s and user.id=%s",(orderNumber, userId))
+				user_info = cursor.fetchall()
+
+				if user_info:
+					
+					contactName = token["name"]
+
+					# print(user_info)
+					all_price = []
+
+					trip = []
+
+					for x in user_info:
+						# print("user info", x)
+						number = x["order_number"]
+						email = x["email"]
+						phone = x["phone"]
+						status = x["payment_status"]
+						off_id = x["off_id"]
+						att_name = x["name"]
+						att_address = x["address"]
+						date = x["date"]
+						time = x["time"]
+						price = x["price"]
+						all_price.append(price)
+
+						att_id = x["id"]
+						# print(att_id)
+
+						cursor.execute("SELECT images FROM all_images WHERE att_id=%s",(att_id,))
+						images = cursor.fetchall()
+						image = images[0]["images"]
+
+						attraction = {
+							"id" : off_id,
+							"name" : att_name,
+							"address" : att_address,
+							"image" : image,
+							"date" : date,
+							"time" : time,
+							"price" : price
+						}
+						trip.append(attraction)
+					
+					total_price = 0
+					for x in all_price:
+						x = int(x)
+						total_price += x
+
+					message = {
+						"data" : {
+							"number" : number,
+							"total price" : total_price,
+							"trip" : trip,
+							"contact" : {
+								"name" : contactName,
+								"email" : email,
+								"phone" : phone
+							},
+							"status" : status
+						}
+					}
+				else:
+					message = {
+						"data" : None
+					}
+			else:
+				message = {
+					"error" : True,
+					"message" : "請先登入"
+				}
+			return message
+
+	# catch any error due to connection issue
+	except Error as e:
+		print("Failed, Connection Problem", e)
+		return (500)
+	# close db connection and return the connection object to the connection pool for the next usage if it the object was connected
+	finally:
+		if con.is_connected():
+			con.close()
+			print("MySQL connection is closed")
+
+@app.route("/api/checkorder")
+def getAllOrders():
+	try:
+		connectionpool=pooling.MySQLConnectionPool(
+			pool_name="mysqlpool",
+			pool_size=3,
+			pool_reset_session=True,
+			user="root",
+			password="",
+			host="localhost",
+			port=3306,
+			database="tp1"
+		)
+		# get connection object from the connection pool
+		con=connectionpool.get_connection()
+		cursor=con.cursor(dictionary = True)
+		if con.is_connected():
+			headers = {
+				'Authorization' : request.headers.get('Authorization'),
+				'Accept' : 'application/json',
+				'Content-Type' : 'application/json'
+			}
+			# print(headers)
+			encryp_token = headers["Authorization"]
+			# print(encryp_token)
+			clean_token = encryp_token.replace("Bearer ", "")
+			# print("token:", clean_token)
+
+			clean_token = clean_token.strip('\"')
+			token = jwt.decode(clean_token, key, algorithms="HS256")
+			print("check decoded", token, "userId", token["id"])
+			
+			if token:
+				userId = token["id"]
+				print("check", userId)
+				cursor.execute("SELECT DISTINCT order_number FROM booking WHERE payment_status=0 and user_id=%s",(userId,))
+				orders = cursor.fetchall()
+				print("orders", orders)
+				all_orders = []
+				for y in orders:
+					all_orders.append(y["order_number"])
+				message = {
+					"data" : all_orders
+				}
+			return message
+
+
+	# catch any error due to connection issue
+	except Error as e:
+		print("Failed, Connection Problem", e)
+		return (500)
+	# close db connection and return the connection object to the connection pool for the next usage if it the object was connected
+	finally:
+		if con.is_connected():
+			con.close()
+			print("MySQL connection is closed")
+
 
 app.run(host="0.0.0.0", port=3000)

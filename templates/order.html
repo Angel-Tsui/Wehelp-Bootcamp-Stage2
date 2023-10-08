@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>感謝</title>
+    <title>查看訂單記錄</title>
     <link rel="stylesheet" type="text/css" a href="/static/standard.css"/>
-    <link rel="stylesheet" type="text/css" a href="/static/thankyou.css"/>
+    <link rel="stylesheet" type="text/css" a href="/static/order.css"/>
     <script defer src="/static/standard.js"></script>
-    <script defer src="/static/thankyou.js"></script>
+    <script defer src="/static/order.js"></script>
 </head>
 <body onload="verify();confirm()">
-    <!-- top bar -->
     <div class="nav__bg">
         <div class="nav">
             <span class="nav__left"><a href="/">台北一日遊</a></span>
@@ -22,13 +21,18 @@
     </div>
 
     <!-- main content -->
-    <div class="main_content">
-        <div class="confirmMessage">您好，<span></span>，已確認的訂單號碼如下：</div>
-        <div class="order_number"></div>
+    <!-- <div class="main"> -->
+    <div class="main__title">請點擊以下已確定的行程編號查看詳情：</div>
+    <div class="main__orders"></div>
+    <hr/>
+    <div class="main__orders__list">
+        <!-- <div class="main__orders__details">
+            <div class="main__orders__details--contact"></div>
+            <div class="main__orders__details--trip"></div>
+        </div> -->
     </div>
-
-    <!-- 查看過往訂單 -->
-    <div class="checkOrder">查看過往訂單</div>
+    
+    <!-- </div> -->
 
     <!-- footer -->
     <div class="footer">COPYRIGHT © 2021 台北一日遊</div>

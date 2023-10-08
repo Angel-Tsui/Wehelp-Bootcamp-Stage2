@@ -3,13 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>感謝</title>
+    <title>錯誤</title>
     <link rel="stylesheet" type="text/css" a href="/static/standard.css"/>
-    <link rel="stylesheet" type="text/css" a href="/static/thankyou.css"/>
     <script defer src="/static/standard.js"></script>
-    <script defer src="/static/thankyou.js"></script>
 </head>
-<body onload="verify();confirm()">
+<body>
     <!-- top bar -->
     <div class="nav__bg">
         <div class="nav">
@@ -22,13 +20,9 @@
     </div>
 
     <!-- main content -->
-    <div class="main_content">
-        <div class="confirmMessage">您好，<span></span>，已確認的訂單號碼如下：</div>
-        <div class="order_number"></div>
+    <div class="error message">
+        {{ result }}
     </div>
-
-    <!-- 查看過往訂單 -->
-    <div class="checkOrder">查看過往訂單</div>
 
     <!-- footer -->
     <div class="footer">COPYRIGHT © 2021 台北一日遊</div>

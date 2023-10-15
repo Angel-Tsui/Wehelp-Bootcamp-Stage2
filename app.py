@@ -508,7 +508,7 @@ def order():
 
 				trip_info = result["order"]["trip"]
 				order_number = result["prime"][-15:]
-				print("trip_info", trip_info)
+				# print("trip_info", trip_info)
 				# 把電話號碼的資料更新到 user 資料表中
 				cursor.execute("UPDATE user SET phone=%s WHERE id=%s",(user_phone, userId))
 				# 把資料放到資料庫 orders 資料表裏，目前所有 payment 的 status 都是 1，即還沒有付款
@@ -517,7 +517,7 @@ def order():
 					# print(userId, bookingId, order_number)
 
 					# 把 order_number 更新到 booking 資料表
-					print("order_number & bookingID", order_number, type(order_number), bookingId)
+					# print("order_number & bookingID", order_number, type(order_number), bookingId)
 					cursor.execute("UPDATE booking SET order_number=%s WHERE id=%s and user_id=%s",(order_number, bookingId, userId))
 
 					# cursor.execute("INSERT INTO orders(user_id, booking_id, order_number)VALUES(%s,%s,%s)",(userId, bookingId, order_number))

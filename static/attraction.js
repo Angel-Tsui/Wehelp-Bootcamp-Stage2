@@ -128,13 +128,13 @@ fetch(src)
         const profile_short = document.querySelector(".detail__display--profile--short")
         profile_short.innerText = data["mrt"] + " 的 " + data["category"];
 
-        const intro_description = document.querySelector(".detail__intro--description");
+        const intro_description = document.querySelector("#general");
         intro_description.innerText = data["description"];
 
-        const location_content = document.querySelector(".detail__intro--location--content");
+        const location_content = document.querySelector("#location");
         location_content.innerText = data["address"];
 
-        const transport_content = document.querySelector(".detail__intro--transport--content");
+        const transport_content = document.querySelector("#transport");
         transport_content.innerText = data["transport"];
     })
 

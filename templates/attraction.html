@@ -19,13 +19,15 @@
             <span class="nav__left"><a href="/">台北一日遊</a></span>
             <div class="nav__right">
                 <span class="nav__right--plan">預定行程</span>
-                <span class="nav__right--user">登入/註冊</span>
+                <span class="loading"></span>
+                <span class="nav__right--user"></span>
+                <!-- <span class="nav__right--user skeleton skeleton_status"></span> -->
             </div>
         </div>
     </div>
     <!-- main content -->
     <div class="detail__display">
-        <div class="detail__display--pics">
+        <div class="detail__display--pics skeleton">
             <div class="detail__display--gallery"></div>
             <div class="functions">
                 <div class="detail__display--leftClick"><span> <span> < </span> </span></div>
@@ -35,8 +37,8 @@
         </div>
         <!-- <div class="detail__display--space"></div> -->
         <div class="detail__display--profile">
-            <div class='detail__display--profile--title'></div>
-            <div class="detail__display--profile--short"></div>
+            <div class='detail__display--profile--title skeleton skeleton_text skeleton_text_title'></div>
+            <div class="detail__display--profile--short skeleton skeleton_text skeleton_text_shortDescription"></div>
             <div class="detail__display--profile--booking">
                 <div class="booking--title">訂購導覽行程</div>
                 <div class="booking--des">以此景點為中心的一日行程，帶您探索城市角落故事</div>
@@ -62,14 +64,19 @@
     </div>
     <hr/>
     <div class="detail__intro">
-        <div class="detail__intro--description"></div>
+        <div class="detail__intro--description skeleton skeleton_text" id="general"></div>
+        <div class="skeleton skeleton_text"></div>
+        <div class="skeleton skeleton_text"></div>
+        <div class="skeleton skeleton_text skeleton_text_last"></div>
         <!-- <div class="detail__intro--location"> -->
             <div class="detail__intro--location--title">景點地址：</div>
-            <div class="detail__intro--location--content"></div>
+            <div class="detail__intro--location--content skeleton skeleton_text" id="location"></div>
+            <div class="skeleton skeleton_text skeleton_text_last"></div>
         <!-- </div> -->
         <!-- <div class="detail__intro--transport"> -->
             <div class="detail__intro--transport--title">交通方式：</div>
-            <div class="detail__intro--transport--content"></div>
+            <div class="detail__intro--transport--content skeleton skeleton_text" id="transport"></div>
+            <div class="skeleton skeleton_text skeleton_text_last"></div>
         <!-- </div> -->
     </div>
     <!-- footer -->

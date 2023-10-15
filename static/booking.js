@@ -32,6 +32,14 @@ if(token_o){
             const itemContainer = document.querySelector(".itemContainer")
             let totalPrice = 0
             
+            // const collectInfo = document.querySelector(".collectInfo")
+            // collectInfo.style.display = "block";
+
+            const postLoad_content = document.querySelectorAll(".postLoad_content")
+            postLoad_content.forEach((content) => {
+                content.style.display = "block"
+            })
+
             for (i=0;i<Object.keys(data).length;i++){
                 // console.log(i)
                 // console.log(data[i])
@@ -336,6 +344,9 @@ if(token_o){
 
         // 如果沒有預定了的行程，顯示沒有預定的信息
         else{
+            const welcomeMessage = document.querySelector(".welcomeMessage")
+            welcomeMessage.style.display = "block"
+
             const itemContainer = document.querySelector(".itemContainer");
             itemContainer.style.display = "none";
 

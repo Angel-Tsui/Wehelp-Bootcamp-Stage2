@@ -1,15 +1,35 @@
+import os
+from dotenv import load_dotenv
+load_dotenv()
+jwtKey = os.getenv("jwtKey")
+db_User = os.getenv("db_user")
+db_Pw = os.getenv("db_Pw")
+payment_PartnerKey = os.getenv("payment_PartnerKey")
+payment_merchantId = os.getenv("payment_MerchantID")
+# print(jwtKey, db_User, db_Pw, payment_PartnerKey, payment_merchantId, "!")
+
 from flask import *
 app=Flask(__name__)
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
 
 import jwt
-key = "keepsafe"
+key = jwtKey
 import datetime
 
 import mysql.connector
 from mysql.connector import Error
 from mysql.connector import pooling
+config = {
+	"pool_name" : "mysqlpool",
+	"pool_size" : 3,
+	"pool_reset_session" : True,
+	"user" : db_User,
+	"password" : db_Pw,
+	"host" : "localhost",
+	"port" : 3306,
+	"database" : "tp1"
+}
 
 import requests
 
@@ -57,16 +77,7 @@ def registerac():
 	password = result["password"]
 	# print("name:", name, "email:", email, "passsword: ", password)
 	try:
-		connectionpool=pooling.MySQLConnectionPool(
-			pool_name="mysqlpool",
-			pool_size=3,
-			pool_reset_session=True,
-			user="root",
-			password="",
-			host="localhost",
-			port=3306,
-			database="tp1"
-		)
+		connectionpool=pooling.MySQLConnectionPool(**config)
 		con=connectionpool.get_connection()
 		if con.is_connected():
 			cursor=con.cursor(dictionary = True)
@@ -103,16 +114,7 @@ def registerac():
 @app.route("/api/user/auth", methods=["PUT","GET"])
 def signin():
 	try:
-		connectionpool=pooling.MySQLConnectionPool(
-			pool_name="mysqlpool",
-			pool_size=3,
-			pool_reset_session=True,
-			user="root",
-			password="",
-			host="localhost",
-			port=3306,
-			database="tp1"
-		)
+		connectionpool=pooling.MySQLConnectionPool(**config)
 		con=connectionpool.get_connection()
 		if con.is_connected():
 			cursor=con.cursor(dictionary = True)
@@ -187,17 +189,7 @@ def signin():
 @app.route("/api/attractions")
 def getData():
 	try:
-		connectionpool=pooling.MySQLConnectionPool(
-			pool_name="mysqlpool",
-			pool_size=3,
-			pool_reset_session=True,
-			user="root",
-			password="",
-			host="localhost",
-			port=3306,
-			database="tp1"
-		)
-		
+		connectionpool=pooling.MySQLConnectionPool(**config)
 		# get connection object from the connection pool
 		con=connectionpool.get_connection()
 		if con.is_connected():
@@ -272,19 +264,7 @@ def getData():
 @app.route("/api/attraction/<attractionId>")
 def attID(attractionId):
 	try:
-		connectionpool=pooling.MySQLConnectionPool(
-			pool_name="mysqlpool",
-			pool_size=3,
-			pool_reset_session=True,
-			user="root",
-			password="",
-			host="localhost",
-			port=3306,
-			database="tp1"
-		)
-		# print("Connection Pool Name", connectionpool.pool_name)
-		# print("Connection Pool Size", connectionpool.pool_size)
-		
+		connectionpool=pooling.MySQLConnectionPool(**config)
 		# get connection object from the connection pool
 		con=connectionpool.get_connection()
 		if con.is_connected():
@@ -327,17 +307,7 @@ def attID(attractionId):
 @app.route("/api/mrts")
 def mrt():
 	try:
-		connectionpool=pooling.MySQLConnectionPool(
-			pool_name="mysqlpool",
-			pool_size=3,
-			pool_reset_session=True,
-			user="root",
-			password="",
-			host="localhost",
-			port=3306,
-			database="tp1"
-		)
-		
+		connectionpool=pooling.MySQLConnectionPool(**config)
 		# get connection object from the connection pool
 		con=connectionpool.get_connection()
 		if con.is_connected():
@@ -365,16 +335,7 @@ def mrt():
 def prebook():
 	# print("request method: ", request.method)
 	try:
-		connectionpool=pooling.MySQLConnectionPool(
-			pool_name="mysqlpool",
-			pool_size=3,
-			pool_reset_session=True,
-			user="root",
-			password="",
-			host="localhost",
-			port=3306,
-			database="tp1"
-		)
+		connectionpool=pooling.MySQLConnectionPool(**config)
 		# get connection object from the connection pool
 		con=connectionpool.get_connection()
 		cursor=con.cursor(dictionary = True)
@@ -410,7 +371,7 @@ def prebook():
 						"ok" : True
 					}
 				elif request.method == "GET":
-					print("in GET")
+					# print("in GET")
 					cursor.execute("SELECT attraction.id, attraction.off_id, attraction.name, attraction.address FROM attraction INNER JOIN booking ON attraction.off_id=booking.off_id INNER JOIN user ON booking.user_id=user.id WHERE user.id=%s and booking.payment_status=1",(userId,))
 					attractionDetails = cursor.fetchall()
 					# print("attractionDetails: ", attractionDetails, len(attractionDetails))
@@ -471,16 +432,7 @@ def prebook():
 @app.route("/api/booking/<bookingId>", methods=["DELETE"])
 def delbooking(bookingId):
 	try:
-		connectionpool=pooling.MySQLConnectionPool(
-			pool_name="mysqlpool",
-			pool_size=3,
-			pool_reset_session=True,
-			user="root",
-			password="",
-			host="localhost",
-			port=3306,
-			database="tp1"
-		)
+		connectionpool=pooling.MySQLConnectionPool(**config)
 		# get connection object from the connection pool
 		con=connectionpool.get_connection()
 		cursor=con.cursor(dictionary = True)
@@ -497,10 +449,10 @@ def delbooking(bookingId):
 			# print("token:", clean_token)
 
 			token = jwt.decode(clean_token, key, algorithms="HS256")
-			print("decoded", token, "userId", token["id"])
+			# print("decoded", token, "userId", token["id"])
 
 			if token:
-				print("in DELETE")
+				# print("in DELETE")
 				userId = token["id"]
 				print(userId, bookingId)
 				cursor.execute("DELETE FROM booking WHERE user_id=%s and id=%s",(userId, bookingId))
@@ -527,16 +479,7 @@ def delbooking(bookingId):
 @app.route("/api/orders", methods=["POST"])
 def order():
 	try:
-		connectionpool=pooling.MySQLConnectionPool(
-			pool_name="mysqlpool",
-			pool_size=3,
-			pool_reset_session=True,
-			user="root",
-			password="",
-			host="localhost",
-			port=3306,
-			database="tp1"
-		)
+		connectionpool=pooling.MySQLConnectionPool(**config)
 		# get connection object from the connection pool
 		con=connectionpool.get_connection()
 		cursor=con.cursor(dictionary = True)
@@ -562,9 +505,6 @@ def order():
 				# print(result)
 				user_phone = result["order"]["contact"]["phone"]
 				# print(user_phone)
-
-
-
 
 				trip_info = result["order"]["trip"]
 				order_number = result["prime"][-15:]
@@ -595,10 +535,10 @@ def order():
 					"email" : contact["email"]
 				}
 				data = {
-					"partner_key": "partner_erH47Tx5VSSlIfEWS6PfYn1Usn5zM62jBr87PJlJom4hSnp9tDu0SNNb",
+					"partner_key": payment_PartnerKey,
 					"prime" : prime,
 					"amount" : amount,
-					"merchant_id" : "AngelWehelp_CTBC",
+					"merchant_id" : payment_merchantId,
 					"details" : "台北一日遊",
 					"cardholder" : card_holder
 				}
@@ -612,7 +552,7 @@ def order():
 
 				# 連接到 TapPay 的 API 完成付款程序
 				src = "https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime"
-				headers = {"Content-Type": "application/json; charset=utf-8", "x-api-key":"partner_erH47Tx5VSSlIfEWS6PfYn1Usn5zM62jBr87PJlJom4hSnp9tDu0SNNb"}
+				headers = {"Content-Type": "application/json; charset=utf-8", "x-api-key":payment_PartnerKey}
 				response = requests.post(src, headers=headers, data=data)
 				# print("response", response.status_code)
 
@@ -655,11 +595,6 @@ def order():
 							}
 						}
 					}
-					
-					# 把 booking 資料表裏的相關訂單刪除
-					# for q in user_order:
-					# 	cursor.execute("DELETE FROM booking WHERE user_id=%s and id=%s",(userId, q["booking_id"]))
-					# 	con.commit()
 				else:
 					message = {
 						"error" : True,
@@ -680,16 +615,7 @@ def order():
 @app.route("/api/order/<orderNumber>")
 def searchOrder(orderNumber):
 	try:
-		connectionpool=pooling.MySQLConnectionPool(
-			pool_name="mysqlpool",
-			pool_size=3,
-			pool_reset_session=True,
-			user="root",
-			password="",
-			host="localhost",
-			port=3306,
-			database="tp1"
-		)
+		connectionpool=pooling.MySQLConnectionPool(**config)
 		# get connection object from the connection pool
 		con=connectionpool.get_connection()
 		cursor=con.cursor(dictionary = True)
@@ -707,7 +633,7 @@ def searchOrder(orderNumber):
 
 			clean_token = clean_token.strip('\"')
 			token = jwt.decode(clean_token, key, algorithms="HS256")
-			print("decoded", token, "userId", token["id"])
+			# print("decoded", token, "userId", token["id"])
 			
 			if token:
 				userId = token["id"]
@@ -798,16 +724,7 @@ def searchOrder(orderNumber):
 @app.route("/api/checkorder")
 def getAllOrders():
 	try:
-		connectionpool=pooling.MySQLConnectionPool(
-			pool_name="mysqlpool",
-			pool_size=3,
-			pool_reset_session=True,
-			user="root",
-			password="",
-			host="localhost",
-			port=3306,
-			database="tp1"
-		)
+		connectionpool=pooling.MySQLConnectionPool(**config)
 		# get connection object from the connection pool
 		con=connectionpool.get_connection()
 		cursor=con.cursor(dictionary = True)
@@ -825,14 +742,14 @@ def getAllOrders():
 
 			clean_token = clean_token.strip('\"')
 			token = jwt.decode(clean_token, key, algorithms="HS256")
-			print("check decoded", token, "userId", token["id"])
+			# print("check decoded", token, "userId", token["id"])
 			
 			if token:
 				userId = token["id"]
-				print("check", userId)
+				# print("check", userId)
 				cursor.execute("SELECT DISTINCT order_number FROM booking WHERE payment_status=0 and user_id=%s",(userId,))
 				orders = cursor.fetchall()
-				print("orders", orders)
+				# print("orders", orders)
 				all_orders = []
 				for y in orders:
 					all_orders.append(y["order_number"])
@@ -840,7 +757,6 @@ def getAllOrders():
 					"data" : all_orders
 				}
 			return message
-
 
 	# catch any error due to connection issue
 	except Error as e:
@@ -851,6 +767,5 @@ def getAllOrders():
 		if con.is_connected():
 			con.close()
 			print("MySQL connection is closed")
-
 
 app.run(host="0.0.0.0", port=3000)

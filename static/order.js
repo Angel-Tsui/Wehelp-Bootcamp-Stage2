@@ -77,10 +77,6 @@ let displayData = function(data){
     const main__orders__list = document.querySelector(".main__orders__list")
     main__orders__list.innerText = ""
 
-    const main__orders__details = document.createElement("div")
-    main__orders__details.className = "main__orders__details"
-    main__orders__list.appendChild(main__orders__details)
-
     // // 聯絡人資料
     // const orderContact = document.createElement("div")
     // orderContact.className = "main__orders__details--contact"
@@ -129,7 +125,7 @@ let displayData = function(data){
     // 預訂行程資訊
     const orderTrip = document.createElement("div")
     orderTrip.className = ".main__orders__details--trip"
-    main__orders__details.appendChild(orderTrip)
+    main__orders__list.appendChild(orderTrip)
 
     // 景點内容
     for (x=0;x<data["trip"].length;x++){

@@ -12,6 +12,66 @@ let confirm = function (){
     }
 }
 
+// 在每一次網頁載入的時候檢查會員的登入狀態
+let verify = function(){
+    console.log("verifying")
+    token_o = window.localStorage.getItem("token");
+    const signin = document.querySelector(".nav__right--user");
+    if(token_o){
+        token = token_o.replace(/"/g,"");
+        // console.log(token)
+        // console.log("Bearer " + token);
+        src = "/api/user/auth";
+        fetch(src, {
+            headers : {
+                "Content-Type" : "application/json; charset=UTF-8",
+                "Authorization" : "Bearer " + token,
+            }
+        }).then((response) => {
+            return response.json();
+        }).then((result) => {
+            // console.log(result);
+            // console.log(result["data"]);
+            // let status = result["data"];
+            // console.log(status)
+
+            signin.innerText = "登出系統";
+
+            // const signin = document.querySelector(".nav__right--user");
+            // if(status == null){
+            //     console.log("hello")
+            //     signin.innerText = "登入/註冊";
+            // }
+            // else{
+            //     signin.innerText = "登出系統";
+            // }
+
+            // booking 頁面的 welcome message 處理
+            if(window.location.href.includes("/booking")){
+                const welcomeName = document.querySelector(".welcomeMessage span");
+                welcomeName.innerText = result["data"]["name"];
+
+                // 自動填入 Contact Name 和 Contact Email 的内容
+                const contactName = document.querySelector("#contactName")
+                contactName.value = result["data"]["name"]
+
+                // 自動填入 Contact Name 和 Contact Email 的内容
+                const contactEmail = document.querySelector("#contactEmail")
+                contactEmail.value = result["data"]["email"]
+            }
+            // thankyou 頁面的 confirm message 處理
+            else if (window.location.href.includes("/thankyou")){
+                const confirmMessage = document.querySelector(".confirmMessage span")
+                confirmMessage.innerText = result["data"]["name"];
+            }
+        })
+    }
+    else{
+        console.log("in")
+        signin.innerText = "登入/註冊";
+    }
+}
+
 // 打開表單，先到注冊頁面
 const signin = document.querySelector(".nav__right--user");
 signin.addEventListener("click", function(){
@@ -21,7 +81,7 @@ signin.addEventListener("click", function(){
     }
     // 登出顯示和功能
     else{
-        signin.innerText = "登入/註冊"
+        signin.innerText = "登入/註冊";
         window.localStorage.removeItem("token");
         console.log("token removed");
     }
@@ -228,54 +288,61 @@ let signupbe = function(){
     }
 }
 
-// 在每一次網頁載入的時候檢查會員的登入狀態
-let verify = function(){
-    // console.log("verifying")
-    token_o = window.localStorage.getItem("token");
-    if(token_o){
-        token = token_o.replace(/"/g,"");
-        // console.log(token)
-        // console.log("Bearer " + token);
-        src = "/api/user/auth";
-        fetch(src, {
-            headers : {
-                "Content-Type" : "application/json; charset=UTF-8",
-                "Authorization" : "Bearer " + token,
-            }
-        }).then((response) => {
-            return response.json();
-        }).then((result) => {
-            // console.log(result);
-            // console.log(result["data"]);
-            let status = result["data"];
-            // console.log(status)
+// 載入skeleton
+// const pre_load = document.querySelector(".pre_load")
+// const pre_loadtripContainer = document.querySelector(".tripContainer")
+// if(pre_load){
+//     for (let i=0; i<3; i++){
+//         pre_load.appendChild(pre_loadtripContainer.content.cloneNode(true))
+//     }
+// }
 
-            // booking 頁面的 welcome message 處理
-            if(window.location.href.includes("/booking")){
-                const welcomeName = document.querySelector(".welcomeMessage span");
-                welcomeName.innerText = result["data"]["name"];
-
-                // 自動填入 Contact Name 和 Contact Email 的内容
-                const contactName = document.querySelector("#contactName")
-                contactName.value = result["data"]["name"]
-
-                // 自動填入 Contact Name 和 Contact Email 的内容
-                const contactEmail = document.querySelector("#contactEmail")
-                contactEmail.value = result["data"]["email"]
-            }
-            // thankyou 頁面的 confirm message 處理
-            else if (window.location.href.includes("/thankyou")){
-                const confirmMessage = document.querySelector(".confirmMessage span")
-                confirmMessage.innerText = result["data"]["name"];
-            }
-            
-            const signin = document.querySelector(".nav__right--user");
-            if(status == null){ 
-                signin.innerText = "登入/註冊";
-            }
-            else{
-                signin.innerText = "登出系統";
-            }
-        })
+const allSkeletons = document.querySelectorAll(".skeleton")
+const allSkeletons_text = document.querySelectorAll(".skeleton_text")
+const skeleton_text_title = document.querySelector(".skeleton_text_title")
+const skeleton_text_shortDescription = document.querySelector(".skeleton_text_shortDescription")
+// const skeleton_card = document.querySelectorAll(".skeleton_card")
+const main__att1_setup = document.querySelector(".main__att1--setup")
+if (main__att1_setup){
+    for(i=0;i<12;i++){
+    const main__att1__skeleton = this.document.createElement("div");
+    main__att1__skeleton.className = "main__att1 skeleton skeleton_card"
+    main__att1_setup.appendChild(main__att1__skeleton)
     }
 }
+
+// const skeletons_user = document.querySelector(".skeleton_status");
+window.addEventListener("load", function(){
+    allSkeletons.forEach((s) => {
+        s.classList.remove("skeleton")
+    })
+    allSkeletons_text.forEach((t) => {
+        t.classList.remove("skeleton_text")
+    })
+    if (skeleton_text_title){
+        skeleton_text_title.classList.remove("skeleton_text_title")
+    }
+    if (skeleton_text_shortDescription){
+        skeleton_text_shortDescription.classList.remove("skeleton_text_shortDescription")
+    }
+   
+    // skeletons_user.classList.remove("skeleton_status");
+    const skeletons_loading = document.querySelectorAll(".loading");
+    if(skeletons_loading){
+        skeletons_loading.forEach((loading) => {
+            loading.style.display = "none";
+        })
+        
+    }
+    // if(skeleton_card){
+    //     skeleton_card.forEach((c) => {
+    //         c.classList.remove("skeleton_card")
+    //         // const skeleton_img = this.document.querySelector(".skeleton_img")
+    //         // skeleton_img.
+    //     })
+    // }
+
+    if(main__att1_setup){
+        main__att1_setup.innerHTML = "";
+    }
+})

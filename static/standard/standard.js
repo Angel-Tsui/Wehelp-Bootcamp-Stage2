@@ -90,13 +90,13 @@ signin.addEventListener("click", function(){
 // 行程預定按鈕功能
 const plan = document.querySelector(".nav__right--plan");
 plan.addEventListener("click", function(){
-    console.log("plan", signin.innerText)
+    // console.log("plan", signin.innerText)
     let token = window.localStorage.getItem("token");
     if(token == null){
         modal.showModal();
     }
     else{
-        console.log("logged in");
+        // console.log("logged in");
         window.location = "/booking";
     }
 })

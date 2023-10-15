@@ -28,7 +28,7 @@ if(token_o){
         if (result["data"] != null){
             // console.log("have result")
             let data = result["data"];
-            console.log("first", data, Object.keys(data).length)
+            // console.log("first", data, Object.keys(data).length)
             const itemContainer = document.querySelector(".itemContainer")
             let totalPrice = 0
             
@@ -138,7 +138,7 @@ if(token_o){
                 del.addEventListener("click", () => {
                     // console.log("delete" + del.id)
                     const deleteItem = document.querySelector("#item" + del.id)
-                    console.log(deleteItem)
+                    // console.log(deleteItem)
                     src = "/api/booking/" + del.id;
                     fetch(src, {
                         method : "DELETE",
@@ -281,7 +281,7 @@ if(token_o){
                     let user = document.querySelector("#contactName").value
                     let email = document.querySelector("#contactEmail").value
                     let phone = document.querySelector("#contactNumber").value
-                    console.log("after", phone)
+                    // console.log("after", phone)
                     let contact = {
                         "name" : user,
                         "email" : email,
@@ -290,7 +290,7 @@ if(token_o){
                     order["price"] = totalPrice
                     order["contact"] = contact
                     order["trip"] = data
-                    console.log(data)
+                    // console.log(data)
 
                     // console.log(prime, order)
 

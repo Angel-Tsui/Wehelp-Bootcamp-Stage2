@@ -205,7 +205,7 @@ function load(){
 // 查看過往訂單連結
 const checkOrder_link = document.querySelector(".checkOrder_link");
 checkOrder_link.addEventListener("click", () => {
-    console.log("redirect")
+    // console.log("redirect")
     // 打開表單，先到注冊頁面
     const signin = document.querySelector(".nav__right--user");
     if(signin.innerText == "登入/註冊"){

@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>預定行程</title>
-    <link rel="stylesheet" type="text/css" a href="/static/standard.css"/>
-    <link rel="stylesheet" type="text/css" a href ="/static\booking.css">
-    <script defer src="/static/standard.js"></script>
-    <script defer src="/static/booking.js"></script>
+    <link rel="stylesheet" type="text/css" a href="/static/standard/standard.css"/>
+    <link rel="stylesheet" type="text/css" a href ="/static/booking/booking.css">
+    <script defer src="/static/standard/standard.js"></script>
+    <script defer src="/static/booking/booking.js"></script>
     <script src="https://js.tappaysdk.com/sdk/tpdirect/v5.14.0"></script>
-    <!-- <script defer src="/static/payment.js"></script> -->
 </head>
 <body onload="verify();confirm()">
     <div class="nav__bg">
@@ -17,12 +16,14 @@
             <span class="nav__left"><a href="/">台北一日遊</a></span>
             <div class="nav__right">
                 <span class="nav__right--plan">預定行程</span>
-                <span class="nav__right--user">登入/註冊</span>
+                <span class="loading"></span>
+                <span class="nav__right--user"></span>
+                <!-- <span class="nav__right--user skeleton skeleton_status"></span> -->
             </div>
         </div>
     </div>
 
-    <div class="welcomeMessage">您好，<span></span>，待預訂的行程如下：</div>
+    <div class="welcomeMessage postLoad_content" style="display: none;">您好，<span></span>，待預訂的行程如下：</div>
     <div class="nopreview" style="display: none;">目前沒有任何待預訂的行程
         <div class="checkOrder">查看過往訂單</div>
     </div>
@@ -38,9 +39,10 @@
         </div> -->
         </div>
     </div>
-    
 
-    <div class="collectInfo">
+    <div class="loading"></div>
+    
+    <div class="collectInfo postLoad_content" style="display: none;">
         <hr/>
 
         <div class="contactForm">

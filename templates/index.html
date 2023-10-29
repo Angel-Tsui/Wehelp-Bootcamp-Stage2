@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>台北一日遊</title>
-    <link rel="stylesheet" type="text/css" a href="/static/standard.css"/>
-    <link rel="stylesheet" type="text/css" a href="/static/index.css"/>
-    <script defer src="static/index.js"></script>
-    <script defer src="/static/standard.js"></script>
+    <link rel="stylesheet" type="text/css" a href="/static/standard/standard.css"/>
+    <link rel="stylesheet" type="text/css" a href="/static/index/index.css"/>
+    <script defer src="static/index/index.js"></script>
+    <script defer src="/static/standard/standard.js"></script>
 </head>
 <body onload="verify()">
     <!-- 會員注冊表單 -->
@@ -51,7 +51,9 @@
             <span class="nav__left"><a href="/">台北一日遊</a></span>
             <div class="nav__right">
                 <span class="nav__right--plan">預定行程</span>
-                <span class="nav__right--user">登入/註冊</span>
+                <span class="loading"></span>
+                <span class="nav__right--user"></span>
+                <!-- <span class="nav__right--user skeleton skeleton_status"></span> -->
             </div>
         </div>
     </div>
@@ -68,14 +70,14 @@
                             <span class="banner_word--search--buttonicon"><img src="/static/images/icon_search.svg"/></span>
                         </button>
                     </form>
-            </div>
+                </div>
             <div class="checkOrder_link">點擊查看過往訂單</div>
         </div>
     </div>
     <!-- 網頁主畫面 -->
     <div class="main">
         <!-- 捷運站 -->
-        <div class="main__mrt">
+        <div class="main__mrt skeleton">
             <div class="main__mrt--left"><span> <span> < </span> </span></div>
             <ul class="main__mrt--middle">
             </ul>
@@ -84,6 +86,7 @@
         
         <!-- 景點 -->
         <div class="main__att1--setup">
+            <!-- <div class="main__att1 skeleton skeleton_card"></div> -->
         </div>
     </div>
 

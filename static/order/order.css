@@ -36,15 +36,13 @@
 
 .main__orders__list{
     margin-bottom: 40px;
-}
-
-.main__orders__details--trip{
     margin-top: 20px;
 }
 
 .tripContainer{
     display: flex;
     flex-wrap: wrap;
+    max-width: 640px;
 }
 
 .tripContainer:not(:first-child){
@@ -82,9 +80,13 @@
     color: #448899;
 }
 
+.skeleton_text{
+    width: 300px;
+}
+
 @media (max-width: 1200px){
-    .main__title{width: 95%;}
-    .main__orders{width: 95%;}
+    .main__title{width: 95%; text-align: center;}
+    .main__orders{width: 95%; justify-content: center;}
 }
 
 @media (max-width: 640px){
@@ -92,4 +94,5 @@
     .main__orders{width: 95%; justify-content: center;}
     .tripContainer:not(:first-child){margin-top: 40px;}
     .tripImage{width: 100%;}
+    .tripInfo{margin-left: 10px;}
 }

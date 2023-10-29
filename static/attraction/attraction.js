@@ -128,36 +128,36 @@ fetch(src)
         const profile_short = document.querySelector(".detail__display--profile--short")
         profile_short.innerText = data["mrt"] + " 的 " + data["category"];
 
-        const intro_description = document.querySelector(".detail__intro--description");
+        const intro_description = document.querySelector("#general");
         intro_description.innerText = data["description"];
 
-        const location_content = document.querySelector(".detail__intro--location--content");
+        const location_content = document.querySelector("#location");
         location_content.innerText = data["address"];
 
-        const transport_content = document.querySelector(".detail__intro--transport--content");
+        const transport_content = document.querySelector("#transport");
         transport_content.innerText = data["transport"];
     })
 
 const bookTour = document.querySelector(".booking--confirm");
 bookTour.addEventListener("click", function(){
-    console.log("this tour ok")
+    // console.log("this tour ok")
     let token = window.localStorage.getItem("token");
     if(token == null){
         modal.showModal();
     }
     else{
-        console.log("logged in");
+        // console.log("logged in");
         let src = "/api/booking"
 
         let attractionId = (fullLink.slice(fullLink.indexOf("n/")+1)).replace("/","")
-        console.log(attractionId)
+        // console.log(attractionId)
         let chosenDate = document.querySelector(".booking--form--date input").value;
         if (chosenDate != ""){
             date = chosenDate
-            console.log(date)
+            // console.log(date)
         }
         else{
-            console.log("no date selected")
+            // console.log("no date selected")
             const display_profile = document.querySelector(".detail__display--profile--booking");
             const errorMessage = document.createElement("div");
             errorMessage.innerText = "請選擇日期";
@@ -174,7 +174,7 @@ bookTour.addEventListener("click", function(){
         else{
             time = "afternoon"
         }
-        console.log(attractionId, date, time, price)
+        // console.log(attractionId, date, time, price)
         fetch (src, {
             method : "POST",
             headers : {
@@ -192,7 +192,7 @@ bookTour.addEventListener("click", function(){
         }).then((res) => {
             return res.json();
         }).then((end) => {
-            console.log(end);
+            // console.log(end);
             if(Object.keys(end) == "ok"){
                 window.location = "/booking";
             }

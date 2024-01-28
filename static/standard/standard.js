@@ -73,7 +73,7 @@ let verify = function () {
   }
 };
 
-// 打開表單，先到注冊頁面
+// 打開表單，先到註冊頁面
 const signin = document.querySelector(".nav__right--user");
 signin.addEventListener("click", function () {
   //   console.log("clicked", signin.innerText);
@@ -120,18 +120,18 @@ modal.innerHTML = `
                 <div class="bluebar"></div>
                 <div class="signupform">
                     <img src="/static/images/icon_close.png" class="icon_close"/>
-                    <!-- 注冊表單 -->
+                    <!-- 註冊表單 -->
                     <div id="formcontent_signup">
-                        <div class="signinHeader">注冊會員賬號</div>
+                        <div class="signinHeader">註冊會員賬號</div>
                         <form action="/api/user" class="signupformdetail" method="POST">
                             <div><input type="text" id="name" placeholder="輸入姓名" class="signininfo" required></div>
                             <div><input type="email" id="email" placeholder="輸入電子郵件" class="signininfo" required></div>
                             <div><input type="password" id="password" placeholder="輸入密碼" class="signininfo" required></div>
-                            <div type="submit" class="submitbtn" id="registerbtn">註冊新帳戶</div>
+                            <div type="submit" class="submitbtn" id="registerbtn">註冊新賬號</div>
                             <div class="errormessage"></div>
                             <div class="successmessage"></div>
                             <br/>
-                            <div class="switch" id="signinclick">已經有賬戶了？ 點此登入</div>
+                            <div class="switch" id="signinclick">已經有賬號了？ 點此登入</div>
                         </form>
                     </div>
                     <!-- 登入表單 -->
@@ -144,7 +144,7 @@ modal.innerHTML = `
                             <div class="testbtn" id="testbtn">使用示範賬號</div>
                             <div class="signinfailmessage"></div>
                             <br/>
-                            <div class="switch" id="signupclick">還沒有賬號？ 點此注冊</div>
+                            <div class="switch" id="signupclick">還沒有賬號？ 點此註冊</div>
                         </form>
                     </div>
                 </div>
@@ -239,7 +239,7 @@ let signinbe = function () {
     });
 };
 
-// 注冊按鈕
+// 註冊按鈕
 const registerbtn = document.querySelector("#registerbtn");
 // let inputs = document.querySelectorAll(".signininfo")
 registerbtn.addEventListener("click", function (e) {
@@ -250,7 +250,7 @@ registerbtn.addEventListener("click", function (e) {
   //   console.log("reg");
 });
 
-// 注冊功能，與後端接連，取得回應
+// 註冊功能，與後端接連，取得回應
 let signupbe = function () {
   let regname = document.querySelector("#name").value;
   let regemail = document.querySelector("#email").value;
@@ -279,7 +279,7 @@ let signupbe = function () {
         .then((data) => {
           //   console.log(data);
           if (Object.keys(data) == "ok") {
-            successmessage.innerText = "注冊成功，請在下方點擊登入";
+            successmessage.innerText = "註冊成功，請在下方點擊登入";
             errormessage.innerText = "";
           } else {
             errormessage.innerText = data["message"];

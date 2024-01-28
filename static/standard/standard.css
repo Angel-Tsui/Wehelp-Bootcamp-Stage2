@@ -1,315 +1,342 @@
-body{
-    font-family: "Noto Sans TC";
-    margin: 0px;
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    margin-top: 54px;
-    color: #666666;
+body {
+  font-family: "Noto Sans TC";
+  margin: 0px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin-top: 54px;
+  color: #666666;
 }
 
-a{
-    text-decoration: none;
-    color:#448899;
+a {
+  text-decoration: none;
+  color: #448899;
 }
 
-hr{
-    width: 1180px;
-    border: 0.5px solid #E8E8E8;
-    margin-top: 40px;
-    margin-bottom: 40px;
+hr {
+  width: 1180px;
+  border: 0.5px solid #e8e8e8;
+  margin-top: 40px;
+  margin-bottom: 40px;
 }
 
-#signinclick, #signupclick{
-    cursor: pointer;
+#signinclick,
+#signupclick {
+  cursor: pointer;
 }
 
-.nav__bg{
-    background-color: white;
-    display: flex;
-    justify-content: center;
-    position: fixed;
-    z-index: 99;
-    width: 100%;
-    height: 54px;
-    top: 0px;
+.nav__bg {
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  z-index: 99;
+  width: 100%;
+  height: 54px;
+  top: 0px;
 }
 
-.nav{
-    /* 整個nav bar的設定 */
-    flex: none;
-    margin-top: 0px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 1200px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    /* 台北一日遊字樣設定 */
-    color:#448899;
-    font-size: 30px;
-    font-style: normal;
-    font-weight: 700;
-    position: relative;
+.nav {
+  /* 整個nav bar的設定 */
+  flex: none;
+  margin-top: 0px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 1200px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* 台北一日遊字樣設定 */
+  color: #448899;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 700;
+  position: relative;
 }
 
-.nav__left{
-    padding-left:10px
+.nav__left {
+  padding-left: 10px;
 }
 
-.nav__right{
-    color:#666666;
-    font-size: 16px;
-    font-weight: 500;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.nav__right {
+  color: #666666;
+  font-size: 16px;
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.nav__right--plan{
-    padding: 10px;
-    flex: none;
-    cursor: pointer;
+.nav__right--plan {
+  padding: 10px;
+  flex: none;
+  cursor: pointer;
 }
 
-.nav__right--user{
-    flex: none;
-    padding: 10px;
-    cursor: pointer;
+.nav__right--user {
+  flex: none;
+  padding: 10px;
+  cursor: pointer;
 }
 
-a{
-    white-space: nowrap;
+a {
+  white-space: nowrap;
 }
 
-dialog{
-    padding: 0px;
-    border: 1px ;
-    border-radius: 5px;
-    box-shadow: 0px 4px 60px 0px #AAA;
+dialog {
+  padding: 0px;
+  border: 1px;
+  border-radius: 5px;
+  box-shadow: 0px 4px 60px 0px #aaa;
 }
 
-dialog::backdrop{
-    background: rgba(0, 0, 0, 0.4);
-    /* padding: 0px; */
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.4);
+  /* padding: 0px; */
 }
 
-.completeform{
-    display: flex;
-    flex-direction: column;
-    width: 332px;
+.completeform {
+  display: flex;
+  flex-direction: column;
+  width: 332px;
 }
 
-.bluebar{
-    height: 10px;
-    width: inherit;
-    background: linear-gradient(270deg, #378 0%, #6AB 100%);
-    /* border-radius: 5px 5px 0px 0px; */
+.bluebar {
+  height: 10px;
+  width: inherit;
+  background: linear-gradient(270deg, #378 0%, #6ab 100%);
+  /* border-radius: 5px 5px 0px 0px; */
 }
 
-.signupform{
-    background-color: white;
-    /* border-radius: 0px 0px 5px 5px; */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin: 10px;  
-    color: #666666; 
-    position: relative;
+.signupform {
+  background-color: white;
+  /* border-radius: 0px 0px 5px 5px; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 10px;
+  color: #666666;
+  position: relative;
 }
 
-.icon_close{
-    position: absolute;
-    width: 16px;
-    height: 16px;
-    right: 5px;
-    top: 5px;
-    cursor: pointer;
+.icon_close {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  right: 5px;
+  top: 5px;
+  cursor: pointer;
 }
 
-.signinHeader{
-    font-size: 24px;
-    font-weight: 700;
-    text-align: center;
-    margin-bottom: 15px;
+.signinHeader {
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 15px;
 }
 
-.signupformdetail div{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+.signupformdetail div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.signininfo{
-    padding: 10px;
-    border: 1px solid #E8E8E8;
-    border-radius: 5px;
-    margin-bottom: 10px;
+.signininfo {
+  padding: 10px;
+  border: 1px solid #e8e8e8;
+  border-radius: 5px;
+  margin-bottom: 10px;
 }
 
-.submitbtn{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 5px;
-    width: 310px;
-    height: 47px;
-    background-color: #489;
-    color: white;
-    font-size: 19px;
-    font-weight: 400;
-    margin-bottom: 10px;
-    cursor: pointer;
+.submitbtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  width: 310px;
+  height: 47px;
+  background-color: #489;
+  color: white;
+  font-size: 19px;
+  font-weight: 400;
+  margin-bottom: 10px;
+  cursor: pointer;
 }
 
-.switch{
-    font-size: 16px;
-    font-weight: 500;
-    text-align: center;
-    cursor: pointer;
+.testbtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  border: 1px solid #489;
+  box-sizing: border-box;
+  width: 310px;
+  height: 47px;
+  /* background-color: #489; */
+  color: #489;
+  font-size: 19px;
+  font-weight: 400;
+  margin-bottom: 10px;
+  cursor: pointer;
 }
 
-#formcontent_signin{
-    display: none;
+.switch {
+  font-size: 16px;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
 }
 
-.successmessage{
-    text-align: center;
-    color: green;
+#formcontent_signin {
+  display: none;
 }
 
-.errormessage, .signinfailmessage{
-    text-align: center;
-    color: red;
+.successmessage {
+  text-align: center;
+  color: green;
 }
 
-.checkOrder{
-    margin-top: 20px;
-    width: 150px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 5px;
-    background-color: #489;
-    color: white;
-    font-size: 19px;
-    font-weight: 400;
-    padding: 10px 20px 10px 20px;
-    cursor: pointer;
-    user-select: none;
+.errormessage,
+.signinfailmessage {
+  text-align: center;
+  color: red;
 }
 
-.checkOrder:hover{
-    box-shadow: 2px 2px 2px rgb(47, 94, 106);
+.checkOrder {
+  margin-top: 20px;
+  width: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  background-color: #489;
+  color: white;
+  font-size: 19px;
+  font-weight: 400;
+  padding: 10px 20px 10px 20px;
+  cursor: pointer;
+  user-select: none;
 }
 
-.checkOrder_link{
-    text-decoration: underline;
-    cursor: pointer;
+.checkOrder:hover {
+  box-shadow: 2px 2px 2px rgb(47, 94, 106);
 }
 
-.footer{
-    background-color:#757575;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 104px;
-    width: 100%;
-    right: 0px;
-    left: 0px;
-    bottom: 0px;
-    color: white;
-    margin-top: auto;
+.checkOrder_link {
+  text-decoration: underline;
+  cursor: pointer;
 }
 
-.loading{
-    background: url('/static/images/status_loading.gif');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    width: 70px;
-    height: 21px;
+.footer {
+  background-color: #757575;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 104px;
+  width: 100%;
+  right: 0px;
+  left: 0px;
+  bottom: 0px;
+  color: white;
+  margin-top: auto;
 }
 
-.skeleton{
-    position: relative;
+.loading {
+  background: url("/static/images/status_loading.gif");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 70px;
+  height: 21px;
 }
 
-.skeleton::before{
-    content: '';
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 100%;
-    z-index: 10;
-    background-size: 200%;
-    border-radius: 3px;
-    animation: skeleton 1s linear infinite alternate;
+.skeleton {
+  position: relative;
 }
 
-.skeleton_text{
+.skeleton::before {
+  content: "";
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  background-size: 200%;
+  border-radius: 3px;
+  animation: skeleton 1s linear infinite alternate;
+}
+
+.skeleton_text {
+  width: 95%;
+  height: 10px;
+  border-radius: 2px;
+  margin-left: 8px;
+  margin-bottom: 5px;
+}
+
+.skeleton_text:last-child {
+  width: 80%;
+  margin-bottom: 20px;
+}
+
+.skeleton_text_last {
+  width: 80%;
+  margin-bottom: 20px;
+}
+
+.skeleton_text_title {
+  width: 30%;
+  height: 25px;
+  margin-bottom: 10px;
+}
+
+.skeleton_text_shortDescription {
+  width: 30%;
+  margin-bottom: 10px;
+}
+
+.skeleton_status {
+  width: 70px;
+  height: 21px;
+  margin-right: 3px;
+  border-radius: 10px;
+}
+
+.skeleton_card {
+  border: 1px solid rgb(176, 174, 174);
+  height: 268px;
+  width: 242px;
+}
+
+@keyframes skeleton {
+  0% {
+    background-position: 100% 0;
+    background-color: rgb(225, 227, 227);
+  }
+  100% {
+    background-position: 100% 0;
+    background-color: rgb(207, 211, 212);
+  }
+}
+
+@media (max-width: 1200px) {
+  hr {
     width: 95%;
-    height: 10px;
-    border-radius: 2px;
-    margin-left: 8px;
-    margin-bottom: 5px;
+  }
+  .nav {
+    width: 100%;
+  }
 }
 
-.skeleton_text:last-child{
-    width: 80%;
-    margin-bottom: 20px;
-}
-
-.skeleton_text_last{
-    width: 80%;
-    margin-bottom: 20px;
-}
-
-.skeleton_text_title{
-    width: 30%;
-    height: 25px;
-    margin-bottom: 10px;
-}
-
-.skeleton_text_shortDescription{
-    width: 30%;
-    margin-bottom: 10px;
-}
-
-.skeleton_status{
-    width: 70px;
-    height: 21px;
-    margin-right: 3px;
-    border-radius: 10px;
-}
-
-.skeleton_card{
-    border: 1px solid rgb(176, 174, 174);
-    height: 268px;
-    width: 242px;
-}
-
-@keyframes skeleton{
-    0%{
-        background-position: 100% 0;
-        background-color: rgb(225, 227, 227);
-    }
-    100%{
-        background-position: 100% 0;
-        background-color: rgb(207, 211, 212);
-    }
-}
-
-@media (max-width:1200px){
-    hr{width: 95%}
-    .nav{width:100%}
-}
-
-@media (max-width:640px){
-    hr{width: 95%}
-    .nav{width:100%}
+@media (max-width: 640px) {
+  hr {
+    width: 95%;
+  }
+  .nav {
+    width: 100%;
+  }
 }
